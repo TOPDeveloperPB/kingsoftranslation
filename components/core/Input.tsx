@@ -17,7 +17,7 @@ export function Input({ icon, className, ...props }: Props) {
       </div>
       <input
         className={cn(
-          "p-4 h-[56px] border border-[#DADADA] rounded-[6px]",
+          "p-4 h-[56px] border border-[#DADADA] rounded-[6px] outline-none focus-visible:border-da5001",
           !!icon && "pl-12",
           className
         )}
@@ -27,7 +27,7 @@ export function Input({ icon, className, ...props }: Props) {
   ) : (
     <input
       className={cn(
-        "p-4 h-[56px] border border-[#DADADA] rounded-[6px]",
+        "p-4 h-[56px] border border-[#DADADA] rounded-[6px] outline-none focus-visible:border-da5001",
         !!icon && "pl-12",
         className
       )}

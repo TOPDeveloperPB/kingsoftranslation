@@ -6,17 +6,21 @@ import { Button, Select, Text } from "@/components/core";
 import languagesImage from "@/public/images/languages.png";
 import { languagesMap } from "@/lib/const";
 
-export function WhatLanguageDoWeTranslate() {
-  const [languages, setLanguages] = useState({
-    first: languagesMap.get("en_UK"),
-    second: languagesMap.get("es"),
-  });
+interface LanguagePair {
+  first?: string;
+  second?: string;
+}
 
-  const handleLanguageChange = (name: keyof typeof languages, value: string) =>
+export function WhatLanguageDoWeTranslate() {
+  const [languages, setLanguages] = useState<LanguagePair>();
+
+  const handleLanguageChange = (name: keyof LanguagePair, value: string) =>
     setLanguages((prev) => ({ ...prev, [name]: value }));
 
   const handleSwap = () =>
-    setLanguages((prev) => ({ first: prev.second, second: prev.first }));
+    setLanguages((prev) => ({ first: prev?.second, second: prev?.first }));
+
+  const areBothLanguagesSelected = !!languages?.first && !!languages.second;
 
   return (
     <div className="px-16 py-10 bg-ffffff rounded-[24px] grid gap-10">
@@ -40,7 +44,7 @@ export function WhatLanguageDoWeTranslate() {
             </Text>
             <div className="grid grid-cols-[1fr_auto_1fr] gap-[13px]">
               <Select
-                value={languages.first}
+                value={languages?.first}
                 options={Array.from(languagesMap.values())}
                 onChange={(value) => handleLanguageChange("first", value)}
               />
@@ -51,19 +55,23 @@ export function WhatLanguageDoWeTranslate() {
                 <ArrowSwapIcon />
               </button>
               <Select
-                value={languages.second}
+                value={languages?.second}
                 options={Array.from(languagesMap.values())}
                 onChange={(value) => handleLanguageChange("second", value)}
               />
             </div>
-            <Text variant="Heading/Heading-5" className="text-589999">
-              Yes! We translate from {languages.first} to {languages.second}
-            </Text>
+            {areBothLanguagesSelected && (
+              <Text variant="Heading/Heading-5" className="text-589999">
+                Yes! We translate from {languages.first} to {languages.second}
+              </Text>
+            )}
           </div>
-          <div className="grid grid-flow-col auto-cols-[175px] gap-4">
-            <Button>Order Now</Button>
-            <Button variant="outlined">Get a Quote</Button>
-          </div>
+          {areBothLanguagesSelected && (
+            <div className="grid grid-flow-col auto-cols-[175px] gap-4">
+              <Button>Order Now</Button>
+              <Button variant="outlined">Get a Quote</Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

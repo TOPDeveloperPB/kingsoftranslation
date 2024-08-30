@@ -9,10 +9,17 @@ interface Props {
   value?: string;
   options?: string[];
   defaultValue?: string;
+  placeholder?: string;
   onChange?: (value: string) => void;
 }
 
-export function Select({ value, defaultValue, options, onChange }: Props) {
+export function Select({
+  value,
+  defaultValue,
+  options,
+  placeholder = "Select a value",
+  onChange,
+}: Props) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -37,9 +44,19 @@ export function Select({ value, defaultValue, options, onChange }: Props) {
           open && "rounded-[6px_6px_0pc_0px]"
         )}
       >
-        <Text variant="Paragraph/Paragraph-2">{valueState}</Text>
+        {!!valueState ? (
+          <Text variant="Paragraph/Paragraph-2">{valueState}</Text>
+        ) : (
+          <Text variant="Paragraph/Paragraph-2" className="text-7e7e7e">
+            {placeholder}
+          </Text>
+        )}
         <ArrowDropDownIcon
-          className={cn("transition-all", open && "-scale-100")}
+          className={cn(
+            "transition-all",
+            !valueState && "text-7e7e7e",
+            open && "-scale-100"
+          )}
         />
       </div>
       {open && (
