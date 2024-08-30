@@ -2,6 +2,7 @@ import { Breadcrumbs } from "@/components/core/Breadcrumbs";
 import "./globals.css";
 import type { Metadata } from "next";
 import { PT_Sans, PT_Sans_Caption } from "next/font/google";
+import favicon from "./favicon.png";
 
 const pt_sans = PT_Sans({
   subsets: ["latin"],
@@ -16,8 +17,9 @@ const pt_sans_caption = PT_Sans_Caption({
 });
 
 export const metadata: Metadata = {
-  title: "kingsoftranslation",
-  description: "kingsoftranslation app for translations",
+  title: "Kings of translation",
+  description: "Kings of translation app for translations",
+  icons: favicon.src,
 };
 
 export default function RootLayout({
