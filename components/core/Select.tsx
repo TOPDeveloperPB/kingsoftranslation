@@ -61,7 +61,11 @@ export function Select({ value, defaultValue, options, onChange }: Props) {
                 <Text
                   variant="Paragraph/Paragraph-2"
                   onClick={() => handleChange(option)}
-                  className="p-4 cursor-pointer border border-[#DADADA] rounded-[6px] h-[56px] grid items-center bg-ffffff"
+                  className={cn(
+                    "p-4 cursor-pointer border border-[#DADADA] rounded-[6px] h-[56px] grid items-center bg-ffffff transition-colors hover:bg-fbfbfb",
+                    option === valueState &&
+                      "hover:bg-[#FFF5F0] hover:text-da5001 bg-[#FFF5F0] text-da5001"
+                  )}
                 >
                   {option}
                 </Text>
