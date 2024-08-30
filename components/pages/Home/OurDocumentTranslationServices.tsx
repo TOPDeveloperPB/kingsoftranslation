@@ -41,6 +41,7 @@ export function OurDocumentTranslationServices() {
 
           return (
             <div
+              key={index}
               className={cn(
                 "grid grid-rows-[1fr] transition-all mb-6",
                 areExtraHidden && "grid-rows-[0fr] mb-0"

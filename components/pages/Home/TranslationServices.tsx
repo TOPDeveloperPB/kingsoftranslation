@@ -18,7 +18,10 @@ export function TranslationServices() {
 
       {MOCK_TRANSLATION_SERVICES.map(
         ({ title, description, price, per, style, format, options }) => (
-          <div className="grid p-6 gap-4 grid-rows-[1fr_auto] bg-ffffff rounded-[24px]">
+          <div
+            key={title}
+            className="grid p-6 gap-4 grid-rows-[1fr_auto] bg-ffffff rounded-[24px]"
+          >
             <div className="grid gap-4 content-start">
               <div className="grid gap-2 pb-4 border-b border-dadada">
                 <Text variant="Heading/Heading-4" className="text-da5001">

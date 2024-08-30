@@ -46,6 +46,7 @@ export function AskAQuestions() {
         <div className="grid grid-cols-[repeat(2,_172px)] rounded-full bg-ffffff p-1 gap-2">
           {variants.map(({ name, icon }) => (
             <div
+              key={name}
               className={cn(
                 "grid grid-flow-col gap-3 justify-center p-3 cursor-pointer text-121212 transition-colors rounded-full",
                 name === activeVariant && "bg-[#FFF5F0] text-da5001"

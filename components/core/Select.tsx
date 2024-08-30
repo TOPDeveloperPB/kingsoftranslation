@@ -59,6 +59,7 @@ export function Select({ value, defaultValue, options, onChange }: Props) {
               )
               ?.map((option) => (
                 <Text
+                  key={option}
                   variant="Paragraph/Paragraph-2"
                   onClick={() => handleChange(option)}
                   className={cn(

@@ -22,6 +22,7 @@ export function ExploreOurUniqueApproachToLanguageTranslation() {
       <div className="grid grid-cols-2 gap-6">
         {MOCK_TRANSLATION_VALUES.map(({ name, description, image, href }) => (
           <Link
+            key={name}
             href={href}
             className="bg-f6f6f6 p-6 grid gap-4 content-start rounded-[24px] transition-all hover:opacity-95"
           >
@@ -35,8 +36,12 @@ export function ExploreOurUniqueApproachToLanguageTranslation() {
             <Text as="h3" variant="Heading/Heading-3" className="text-da5001">
               {name}
             </Text>
-            {description.map((descriptionItem) => (
-              <Text variant="Paragraph/Paragraph-2" className="text-7e7e7e">
+            {description.map((descriptionItem, index) => (
+              <Text
+                key={index}
+                variant="Paragraph/Paragraph-2"
+                className="text-7e7e7e"
+              >
                 {descriptionItem}
               </Text>
             ))}

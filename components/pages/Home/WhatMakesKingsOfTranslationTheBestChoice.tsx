@@ -18,7 +18,10 @@ export function WhatMakesKingsOfTranslationTheBestChoice() {
       </div>
       <div className="grid grid-cols-2 gap-4 content-center">
         {MOCK_OPTIONS.map(({ value, description }) => (
-          <div className="grid gap-1 p-[24px_32px] bg-f0f7f7 rounded-[16px] h-[121px]">
+          <div
+            key={value}
+            className="grid gap-1 p-[24px_32px] bg-f0f7f7 rounded-[16px] h-[121px]"
+          >
             <Text className="text-589999" variant="Heading/Heading-3">
               {value}
             </Text>
