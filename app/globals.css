@@ -8,27 +8,47 @@
   }
 }
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+* {
+  font-family: inherit;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.bg-services {
+  background: url(../public/images/translationServicesBG.png) no-repeat
+    center/cover;
+  min-height: 638px;
+}
+
+.bg-didYouKnow {
+  background: url(../public/images/didYouKnow.png) no-repeat center/cover;
+}
+
+:root {
+  --1d1c19: #1d1c19;
+  --ffffff: #ffffff;
+  --da5001: #da5001;
+  --7e7e7e: #7e7e7e;
+  --fbfbfb: #fbfbfb;
+  --589999: #589999;
+  --f0f7f7: #f0f7f7;
+  --f6f6f6: #f6f6f6;
+  --121212: #121212;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--1d1c19);
+  background: var(--fbfbfb);
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  padding: 40px;
 }
 
+main {
+  width: 100%;
+  max-width: 1128px;
+  display: grid;
+  gap: 96px;
+}
