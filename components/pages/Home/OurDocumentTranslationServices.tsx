@@ -90,7 +90,7 @@ export function OurDocumentTranslationServices() {
                     <Link
                       href={href}
                       className={cn(
-                        "border-[8px] border-fbfbfb bg-da5001 group-hover:bg-1d1c19 transition-colors w-12 aspect-square rounded-full grid items-center justify-center absolute z-[2] top-[-7px] right-[-7px]",
+                        "border-[8px] border-fbfbfb bg-da5001 group-hover:bg-1d1c19 transition-colors w-12 aspect-square rounded-full grid items-center justify-center absolute z-[2] top-[-7px] right-[-7px] box-content",
                         isActive && "bg-1d1c19"
                       )}
                     >
@@ -116,14 +116,14 @@ export function OurDocumentTranslationServices() {
                     {/* top edge */}
                     <div
                       className={cn(
-                        "group-hover:after:bg-f6f6f6 after:transition-colors absolute top-0 right-0 bg-fbfbfb w-[calc(38.8px+24px)] h-[24px] z-1 after:absolute after:block after:top-0 after:left-0 after:h-[24px] after:w-[24px] after:bg-ffffff after:rounded-[0px_24px_0px_0px]",
+                        "group-hover:after:bg-f6f6f6 after:transition-colors absolute top-0 right-0 bg-fbfbfb w-[calc(56px+24px)] h-[24px] z-1 after:absolute after:block after:top-0 after:left-0 after:h-[24px] after:w-[24px] after:bg-ffffff after:rounded-[0px_24px_0px_0px]",
                         isActive && "after:bg-f6f6f6"
                       )}
                     />
                     {/* right edge */}
                     <div
                       className={cn(
-                        "group-hover:after:bg-f6f6f6 after:transition-colors absolute top-0 right-0 bg-fbfbfb w-[24px] h-[calc(38.8px+24px)] z-1 after:absolute after:block after:bottom-0 after:left-0 after:h-[24px] after:w-[24px] after:bg-ffffff after:rounded-[0px_24px_0px_0px]",
+                        "group-hover:after:bg-f6f6f6 after:transition-colors absolute top-0 right-0 bg-fbfbfb w-[24px] h-[calc(56px+24px)] z-1 after:absolute after:block after:bottom-0 after:left-0 after:h-[24px] after:w-[24px] after:bg-ffffff after:rounded-[0px_24px_0px_0px]",
                         isActive && "after:bg-f6f6f6"
                       )}
                     />
