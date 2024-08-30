@@ -18,7 +18,7 @@ export function OurDocumentTranslationServices() {
         Our document translation services
       </Text>
       <Input
-        className="rounded-[16px] w-[360px]"
+        className="w-[360px]"
         icon={<SearchIcon />}
         type="text"
         onChange={({ currentTarget: { value } }) => setSearch(value)}

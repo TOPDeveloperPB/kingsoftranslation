@@ -21,7 +21,7 @@ export function ChooseBetweenLanguages() {
           Show All Languages <ArrowIcon stroke="#DA5001" />
         </Button>
       </div>
-      <div className="bg-ffffff rounded-[24px] grid gap-8 p-8">
+      <div className="bg-f0f7f7 rounded-[24px] grid gap-8 p-8">
         <Text variant="Heading/Heading-4" className="text-121212">
           Popular Languages
         </Text>
