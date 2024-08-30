@@ -16,7 +16,7 @@ export function Select({ value, defaultValue, options, onChange }: Props) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((prev) => !prev);
-  const [valueState, setValueState] = useState(defaultValue || "");
+  const [valueState, setValueState] = useState(defaultValue || value || "");
 
   const handleChange = (value: string) => {
     setValueState(value);

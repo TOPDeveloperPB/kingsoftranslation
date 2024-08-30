@@ -40,7 +40,7 @@ export function WhatLanguageDoWeTranslate() {
             </Text>
             <div className="grid grid-cols-[1fr_auto_1fr] gap-[13px]">
               <Select
-                defaultValue={languages.first}
+                value={languages.first}
                 options={Array.from(languagesMap.values())}
                 onChange={(value) => handleLanguageChange("first", value)}
               />
@@ -51,7 +51,7 @@ export function WhatLanguageDoWeTranslate() {
                 <ArrowSwapIcon />
               </button>
               <Select
-                defaultValue={languages.second}
+                value={languages.second}
                 options={Array.from(languagesMap.values())}
                 onChange={(value) => handleLanguageChange("second", value)}
               />
