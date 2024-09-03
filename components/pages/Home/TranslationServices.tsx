@@ -1,23 +1,59 @@
+import Link from "next/link";
+import { useHomeCtx } from ".";
 import { Button, Text } from "@/components/core";
 import { CheckCircleIcon } from "@/public/icons";
-import { MOCK_TRANSLATION_SERVICES } from "./data";
+import { storyblokEditable } from "@storyblok/react";
 
 export function TranslationServices() {
-  return (
-    <div className="grid gap-6 grid-cols-3">
-      <div className="bg-services grid gap-4 p-6 content-start rounded-[24px]">
-        <Text variant="Heading/Heading-3" className="text-ffffff">
-          Translation Services
-        </Text>
-        <Text variant="Paragraph/Paragraph-2" className="text-ffffff">
-          Certified and standard translation services are performed by the same
-          professional translators, but the style of translation and
-          deliverables vary between the services.
-        </Text>
-      </div>
+  const data = useHomeCtx(),
+    component = data.find((data) => data.component === "TranslationServices");
 
-      {MOCK_TRANSLATION_SERVICES.map(
-        ({ title, description, price, per, style, format, options }) => (
+  if (!component) return <></>;
+
+  const { title, description, translation_services } = component;
+
+  const parsedTranslationServices: {
+    title: string;
+    description: string;
+    price: string;
+    per: string;
+    style: string;
+    format: string;
+    options: string[];
+    href: string;
+  }[] = translation_services.tbody.reduce(
+    (prev: any[], { body }: { body: { value: string }[] }) => {
+      prev.push({
+        title: body[0].value,
+        description: body[1].value,
+        price: body[2].value,
+        per: body[3].value,
+        style: body[4].value,
+        format: body[5].value,
+        options: body[6].value.split("##-##"),
+        href: body[7].value,
+      });
+      return prev;
+    },
+    []
+  );
+
+  return (
+    <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-3">
+      <div className="bg-services grid gap-4 p-6 content-start rounded-[24px]">
+        <Text
+          variant="Heading/Heading-3"
+          className="text-ffffff"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
+        <Text
+          variant="Paragraph/Paragraph-2"
+          className="text-ffffff"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
+      </div>
+      {parsedTranslationServices.map(
+        ({ title, description, price, per, style, format, options, href }) => (
           <div
             key={title}
             className="grid p-6 gap-4 grid-rows-[1fr_auto] bg-ffffff rounded-[24px]"
@@ -65,7 +101,9 @@ export function TranslationServices() {
                 ))}
               </div>
             </div>
-            <Button>Start Your Order</Button>
+            <Link href={href}>
+              <Button>Start Your Order</Button>
+            </Link>
           </div>
         )
       )}

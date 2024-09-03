@@ -1,8 +1,8 @@
-import { Breadcrumbs } from "@/components/core/Breadcrumbs";
 import "./globals.css";
-import type { Metadata } from "next";
-import { PT_Sans, PT_Sans_Caption } from "next/font/google";
 import favicon from "./favicon.png";
+import type { Metadata } from "next";
+import { Breadcrumbs } from "@/components/core/Breadcrumbs";
+import { PT_Sans, PT_Sans_Caption } from "next/font/google";
 
 const pt_sans = PT_Sans({
   subsets: ["latin"],
@@ -15,6 +15,13 @@ const pt_sans_caption = PT_Sans_Caption({
   weight: ["400", "700"],
   variable: "--caption",
 });
+
+// import { storyblokInit, apiPlugin } from "@storyblok/react";
+
+// storyblokInit({
+//   accessToken: "Q4vYnoU8FkPykr9j6pwIlwtt",
+//   use: [apiPlugin],
+// });
 
 export const metadata: Metadata = {
   title: "Kings of translation",

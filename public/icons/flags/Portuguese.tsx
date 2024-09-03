@@ -5,8 +5,8 @@ export function Portuguese(props: SVGProps<SVGSVGElement>) {
     <svg width="32" height="25" viewBox="0 0 32 25" fill="none" {...props}>
       <rect y="0.5" width="32" height="24" rx="2" fill="#F93939" />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0 0.5H10.6667V24.5H0V0.5Z"
         fill="#249F58"
       />
@@ -15,20 +15,20 @@ export function Portuguese(props: SVGProps<SVGSVGElement>) {
         fill="#FFDA2C"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M13.7143 13.3V8.5H7.61905V13.3C7.61905 14.1832 8.98286 14.9 10.6667 14.9C12.3505 14.9 13.7143 14.1832 13.7143 13.3Z"
         fill="#F93939"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M9.14285 10.1H12.1905V13.3H9.14285V10.1Z"
         fill="white"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M9.14285 10.1H10.6667V11.7H9.14285V10.1ZM10.6667 11.7H12.1905V13.3H10.6667V11.7Z"
         fill="#1A47B8"
       />

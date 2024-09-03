@@ -1,26 +1,64 @@
 import { Text } from "@/components/core";
-import { MOCK_TRANSLATION_VALUES } from "./data";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { storyblokEditable } from "@storyblok/react";
+import { useHomeCtx } from ".";
+import translationManagementSystem from "@/public/images/translationManagementSystem.jpeg";
+import authenticTranslationServices from "@/public/images/authenticTranslationServices.jpeg";
+import translationServiceDeliveryTimes from "@/public/images/translationServiceDeliveryTimes.jpeg";
+import languages from "@/public/images/languages.jpeg";
+
+const translationValuesIconsMap = new Map([
+  ["translationManagementSystem", translationManagementSystem],
+  ["authenticTranslationServices", authenticTranslationServices],
+  ["translationServiceDeliveryTimes", translationServiceDeliveryTimes],
+  ["languages", languages],
+]);
 
 export function ExploreOurUniqueApproachToLanguageTranslation() {
+  const data = useHomeCtx(),
+    component = data.find(
+      (data) =>
+        data.component === "ExploreOurUniqueApproachToLanguageTranslation"
+    );
+
+  if (!component) return <></>;
+
+  const { title, description, translation_values } = component;
+
+  const parsedTranslationValues: {
+    name: string;
+    description: string[];
+    image: StaticImageData;
+    href: string;
+  }[] = translation_values.tbody.reduce(
+    (prev: any[], { body }: { body: { value: string }[] }) => {
+      prev.push({
+        name: body[0].value,
+        description: body[1].value.split("##-##"),
+        image: translationValuesIconsMap.get(body[2].value),
+        href: body[3].value,
+      });
+      return prev;
+    },
+    []
+  );
+
   return (
-    <div className="grid gap-6">
+    <div {...storyblokEditable(component)} className="grid gap-6">
       <div className="grid gap-4">
-        <Text as="h2" variant="Heading/Heading-2">
-          <span>Explore</span> our unique approach
-          <br />
-          to language translation
-        </Text>
-        <Text variant="Paragraph/Paragraph-1">
-          At Kings of Translation, we offer language services custom-made for
-          the modern age.
-          <br />
-          Read about our unique methods and language translation values here:
-        </Text>
+        <Text
+          as="h2"
+          variant="Heading/Heading-2"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
+        <Text
+          variant="Paragraph/Paragraph-1"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
       </div>
       <div className="grid grid-cols-2 gap-6">
-        {MOCK_TRANSLATION_VALUES.map(({ name, description, image, href }) => (
+        {parsedTranslationValues.map(({ name, description, image, href }) => (
           <Link
             key={name}
             href={href}

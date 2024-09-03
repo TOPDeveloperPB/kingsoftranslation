@@ -21,7 +21,7 @@ interface Props extends Generic {
     | "Heading/Heading-4"
     | "Heading/Heading-5"
     | "Heading/Heading-6";
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "p" | "span";
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "p" | "span" | "div";
 }
 
 const styleBy: Record<Required<Props>["variant"], ClassValue> = {

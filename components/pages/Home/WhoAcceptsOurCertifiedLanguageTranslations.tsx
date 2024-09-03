@@ -1,14 +1,61 @@
+import { useHomeCtx } from ".";
 import { Text } from "@/components/core";
-import { MOCK_ACCEPTS } from "./data";
+import { storyblokEditable } from "@storyblok/react";
+import {
+  CitizenshipImmigrationServicesIcon,
+  UniversitiesIcon,
+  BanksIcon,
+  GovernmentIcon,
+  SocialSecurityAdministrationIcon,
+} from "@/public/icons";
+
+const acceptsIconsMap = new Map([
+  [
+    "U.S. Citizenship and Immigration Services",
+    <CitizenshipImmigrationServicesIcon key="U.S. Citizenship and Immigration Services" />,
+  ],
+  ["All universities", <UniversitiesIcon key="All universities" />],
+  ["All banks", <BanksIcon key="All banks" />],
+  ["All government bodies", <GovernmentIcon key="All government bodies" />],
+  [
+    "Social Security Administration",
+    <SocialSecurityAdministrationIcon key="Social Security Administration" />,
+  ],
+]);
 
 export function WhoAcceptsOurCertifiedLanguageTranslations() {
+  const data = useHomeCtx(),
+    component = data.find(
+      (data) => data.component === "WhoAcceptsOurCertifiedLanguageTranslations"
+    );
+
+  if (!component) return <></>;
+
+  const { title, accepts } = component;
+
+  const parsedAccepts: {
+    icon: JSX.Element;
+    name: string;
+  }[] = accepts.tbody.reduce(
+    (prev: any[], { body }: { body: { value: string }[] }) => {
+      prev.push({
+        name: body[0].value,
+        icon: acceptsIconsMap.get(body[0].value),
+      });
+      return prev;
+    },
+    []
+  );
+
   return (
-    <div className="grid gap-6">
-      <Text as="h2" variant="Heading/Heading-2">
-        Who <span>accepts</span> our certified language translations?
-      </Text>
+    <div {...storyblokEditable(component)} className="grid gap-6">
+      <Text
+        as="h2"
+        variant="Heading/Heading-2"
+        dangerouslySetInnerHTML={{ __html: title }}
+      />
       <div className="grid grid-cols-5 gap-4">
-        {MOCK_ACCEPTS.map(({ icon, name }) => (
+        {parsedAccepts.map(({ icon, name }) => (
           <div
             key={name}
             className="bg-f6f6f6 p-4 grid gap-6 rounded-[16px] content-start"

@@ -3,8 +3,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { ArrowSwapIcon } from "@/public/icons";
 import { Button, Select, Text } from "@/components/core";
-import languagesImage from "@/public/images/languages.png";
 import { languagesMap } from "@/lib/const";
+import { useHomeCtx } from ".";
+import Link from "next/link";
+import { storyblokEditable } from "@storyblok/react";
 
 interface LanguagePair {
   first?: string;
@@ -12,6 +14,10 @@ interface LanguagePair {
 }
 
 export function WhatLanguageDoWeTranslate() {
+  const data = useHomeCtx(),
+    component = data.find(
+      (data) => data.component === "WhatLanguageDoWeTranslate"
+    );
   const [languages, setLanguages] = useState<LanguagePair>();
 
   const handleLanguageChange = (name: keyof LanguagePair, value: string) =>
@@ -22,26 +28,39 @@ export function WhatLanguageDoWeTranslate() {
 
   const areBothLanguagesSelected = !!languages?.first && !!languages.second;
 
+  if (!component) return <></>;
+
+  const { title, description, image, success, main_button, secondary_button } =
+    component;
+
+  const successWithValues = success
+    .replace("{languages.first}", languages?.first)
+    .replace("{languages.second}", languages?.second);
+
   return (
-    <div className="px-16 py-10 bg-ffffff rounded-[24px] grid gap-10">
-      <Text as="h3" variant="Heading/Heading-3">
-        What language do we <span>translate </span>?
-      </Text>
+    <div
+      {...storyblokEditable(component)}
+      className="px-16 py-10 bg-ffffff rounded-[24px] grid gap-10"
+    >
+      <Text
+        as="h3"
+        variant="Heading/Heading-3"
+        dangerouslySetInnerHTML={{ __html: title }}
+      />
       <div className="grid gap-[37px] grid-cols-[auto_1fr] items-center">
         <Image
           priority
-          alt="languages"
-          src={languagesImage.src}
-          width={languagesImage.width}
-          height={languagesImage.height}
-          className="w-[355px] h-[320px]"
+          alt={image.alt ?? "languages"}
+          src={image.filename}
+          width={355}
+          height={320}
         />
         <div className="grid gap-8">
           <div className="grid gap-4">
-            <Text variant="Paragraph/Paragraph-1">
-              Here you can find out if we’re able to offer the translations you
-              need
-            </Text>
+            <Text
+              variant="Paragraph/Paragraph-1"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
             <div className="grid grid-cols-[1fr_auto_1fr] gap-[13px]">
               <Select
                 value={languages?.first}
@@ -62,14 +81,18 @@ export function WhatLanguageDoWeTranslate() {
             </div>
             {areBothLanguagesSelected && (
               <Text variant="Heading/Heading-5" className="text-589999">
-                Yes! We translate from {languages.first} to {languages.second}
+                {successWithValues}
               </Text>
             )}
           </div>
           {areBothLanguagesSelected && (
             <div className="grid grid-flow-col auto-cols-[175px] gap-4">
-              <Button>Order Now</Button>
-              <Button variant="outlined">Get a Quote</Button>
+              <Link href={main_button.url}>
+                <Button>{main_button.title}</Button>
+              </Link>
+              <Link href={secondary_button.url}>
+                <Button variant="outlined">{secondary_button.title}</Button>
+              </Link>
             </div>
           )}
         </div>

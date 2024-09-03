@@ -1,3 +1,4 @@
+"use client";
 import { CertifiedDocumentTranslationServices } from "./CertifiedDocumentTranslationServices";
 import { WhatMakesKingsOfTranslationTheBestChoice } from "./WhatMakesKingsOfTranslationTheBestChoice";
 import { OurDocumentTranslationServices } from "./OurDocumentTranslationServices";
@@ -7,17 +8,21 @@ import { WhatIsCertifiedTranslationExactly } from "./WhatIsCertifiedTranslationE
 import { TranslationServices } from "./TranslationServices";
 import { ChooseBetweenLanguages } from "./ChooseBetweenLanguages";
 import { SampleCertifiedTranslations } from "./SampleCertifiedTranslations";
-import { Buttons } from "./Buttons";
+import { PartnershipButtons } from "./Buttons";
 import { WhoAcceptsOurCertifiedLanguageTranslations } from "./WhoAcceptsOurCertifiedLanguageTranslations";
 import { DidYouKnow } from "./DidYouKnow";
 import { Achievements } from "./Achievements";
 import { ExploreOurUniqueApproachToLanguageTranslation } from "./ExploreOurUniqueApproachToLanguageTranslation";
 import { MakeYourNextMove } from "./MakeYourNextMove";
 import { AskAQuestions } from "./AskAQuestions";
+import { createContext, useContext } from "react";
 
-export function Home() {
+const HomeCtx = createContext<any[]>([]);
+export const useHomeCtx = () => useContext(HomeCtx);
+
+export function Home({ data }: any) {
   return (
-    <>
+    <HomeCtx.Provider value={data}>
       <CertifiedDocumentTranslationServices />
       <WhatMakesKingsOfTranslationTheBestChoice />
       <OurDocumentTranslationServices />
@@ -27,13 +32,13 @@ export function Home() {
       <TranslationServices />
       <ChooseBetweenLanguages />
       <SampleCertifiedTranslations />
-      <Buttons />
+      <PartnershipButtons />
       <WhoAcceptsOurCertifiedLanguageTranslations />
       <DidYouKnow />
       <Achievements />
       <ExploreOurUniqueApproachToLanguageTranslation />
       <MakeYourNextMove />
       <AskAQuestions />
-    </>
+    </HomeCtx.Provider>
   );
 }

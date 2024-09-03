@@ -1,39 +1,56 @@
+import Link from "next/link";
 import Image from "next/image";
+import { useHomeCtx } from ".";
 import { Button, Text } from "@/components/core";
-import certification from "@/public/images/certification.png";
+import { storyblokEditable } from "@storyblok/react";
 
 export function WhatIsCertifiedTranslationExactly() {
+  const data = useHomeCtx(),
+    component = data.find(
+      (data) => data.component === "WhatIsCertifiedTranslationExactly"
+    );
+
+  if (!component) return <></>;
+
+  const { title, description, image, remark, main_button, secondary_button } =
+    component;
+
   return (
-    <div className="px-16 py-10 bg-ffffff rounded-[24px] grid gap-[56px] grid-cols-[1fr_auto] items-center">
+    <div
+      {...storyblokEditable(component)}
+      className="px-16 py-10 bg-ffffff rounded-[24px] grid gap-[56px] grid-cols-[1fr_auto] items-center"
+    >
       <div className="grid gap-6">
-        <Text as="h3" variant="Heading/Heading-3">
-          What is certified translation, exactly?
-        </Text>
+        <Text
+          as="h3"
+          variant="Heading/Heading-3"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
         <div className="grid gap-4">
-          <Text variant="Paragraph/Paragraph-2">
-            Certified translation involves transposing (or transforming) an
-            official document – such as a passport or marriage certificate –
-            from one language to another. Once a certificate or document is
-            translated and meets professional linguistic and industry standards,
-            it verified to confirm its integrity and its legality.
-          </Text>
-          <Text variant="Heading/Heading-5">
-            Certified translation is a delicate process that requires niche
-            skills and expertise.
-          </Text>
+          <Text
+            variant="Paragraph/Paragraph-2"
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+          <Text
+            variant="Heading/Heading-5"
+            dangerouslySetInnerHTML={{ __html: remark }}
+          />
         </div>
         <div className="grid grid-flow-col auto-cols-[175px] gap-4">
-          <Button>Get a Free Quote</Button>
-          <Button variant="outlined">Order Now</Button>
+          <Link href={main_button.url}>
+            <Button>{main_button.title}</Button>
+          </Link>
+          <Link href={secondary_button.url}>
+            <Button variant="outlined">{secondary_button.title}</Button>
+          </Link>
         </div>
       </div>
       <Image
         priority
-        alt="certification"
-        src={certification.src}
-        width={certification.width}
-        height={certification.height}
-        className="w-[340px] aspect-square"
+        src={image.filename}
+        width={340}
+        height={340}
+        alt={image.alt ?? "certification"}
       />
     </div>
   );

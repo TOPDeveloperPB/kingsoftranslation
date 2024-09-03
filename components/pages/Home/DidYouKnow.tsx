@@ -1,24 +1,38 @@
 import { Button, Text } from "@/components/core";
+import { useHomeCtx } from ".";
+import Link from "next/link";
+import { storyblokEditable } from "@storyblok/react";
 
 export function DidYouKnow() {
+  const data = useHomeCtx(),
+    component = data.find((data) => data.component === "DidYouKnow");
+
+  if (!component) return <></>;
+
+  const { title, description, link } = component;
+
   return (
-    <div className="bg-didYouKnow rounded-[40px] px-16 py-[72px] grid">
+    <div
+      {...storyblokEditable(component)}
+      className="bg-didYouKnow rounded-[40px] px-16 py-[72px] grid"
+    >
       <div className="grid gap-[42px] max-w-[464px]">
         <div className="grid gap-4">
-          <Text as="h3" variant="Heading/Heading-3" className="text-ffffff">
-            DID YOU KNOW?
-          </Text>
+          <Text
+            as="h3"
+            variant="Heading/Heading-3"
+            className="text-ffffff"
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
           <Text
             variant="Paragraph/Paragraph-1"
             className="text-ffffff [&>span]:text-da5001"
-          >
-            Our certified language translations are a package deal,
-            incorporating world-class translations and official document
-            notarization, apostille or sworn translator certification service.
-            Yes, we <span>do it all</span>.
-          </Text>
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
         </div>
-        <Button className="w-[143px]">Learn more</Button>
+        <Link href={link.url}>
+          <Button className="w-[143px]">{link.title}</Button>
+        </Link>
       </div>
     </div>
   );

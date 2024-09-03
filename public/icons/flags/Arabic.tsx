@@ -8,20 +8,20 @@ export function Arabic(props: SVGProps<SVGSVGElement>) {
         fill="white"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0 16.5H32V24.5H0V16.5Z"
         fill="#151515"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0 0.5H32V8.5H0V0.5Z"
         fill="#249F58"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M0 0.5V24.5H9.14286V0.5H0Z"
         fill="#F93939"
       />

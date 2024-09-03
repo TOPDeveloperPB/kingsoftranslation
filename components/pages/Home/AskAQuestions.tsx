@@ -1,6 +1,9 @@
 "use client";
+import Link from "next/link";
+import { useHomeCtx } from ".";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { storyblokEditable } from "@storyblok/react";
 import { EmailIcon, PhoneIcon } from "@/public/icons";
 import { Button, Input, Label, Text, Textarea } from "@/components/core";
 
@@ -15,30 +18,40 @@ export function AskAQuestions() {
       icon: <EmailIcon />,
     },
   ];
-
   const [activeVariant, setActiveVariant] = useState(variants[0].name);
+  const data = useHomeCtx(),
+    component = data.find((data) => data.component === "AskAQuestions");
+
+  if (!component) return <></>;
+
+  const { title, description, name, main_button } = component;
 
   return (
-    <div className="bg-[#F6F6F6] rounded-[24px] grid grid-cols-[1fr_auto] gap-12 p-[48px_56px]">
+    <div
+      {...storyblokEditable(component)}
+      className="bg-[#F6F6F6] rounded-[24px] grid grid-cols-[1fr_auto] gap-12 p-[48px_56px]"
+    >
       <div className="grid gap-10 content-start">
-        <Text as="h2" variant="Heading/Heading-2" className="text-da5001">
-          Ask a questions
-        </Text>
+        <Text
+          as="h2"
+          variant="Heading/Heading-2"
+          className="text-da5001"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
         <div className="grid gap-6 grid-cols-[auto_1fr] content-start">
           <div className="bg-[#D9D9D9] w-[176px] h-[251px] rounded-[16px]" />
           <div className="grid gap-4 py-2 content-start">
-            <Text as="h4" variant="Heading/Heading-4" className="text-121212">
-              William Reid
-            </Text>
-            <Text variant="Paragraph/Paragraph-1" className="text-7e7e7e">
-              Got a question or need a quote?
-              <br />
-              Looking for specialist language translation, interpretation
-              guidance or are you just curious about the translation process?
-              William is here for you.
-              <br />
-              Fill in the form and he will contact you as soon as possible.
-            </Text>
+            <Text
+              as="h4"
+              variant="Heading/Heading-4"
+              className="text-121212"
+              dangerouslySetInnerHTML={{ __html: name }}
+            />
+            <Text
+              variant="Paragraph/Paragraph-1"
+              className="text-7e7e7e"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
           </div>
         </div>
       </div>
@@ -77,7 +90,9 @@ export function AskAQuestions() {
             <Textarea placeholder="Write your Questions" />
           </Label>
         </div>
-        <Button>Send</Button>
+        <Link href={main_button.url}>
+          <Button>{main_button.title}</Button>
+        </Link>
       </div>
     </div>
   );
