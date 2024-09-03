@@ -40,8 +40,6 @@ export function TranslationServices() {
     []
   );
 
-  console.log(parsedTranslationServices);
-
   return (
     <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-3">
       <div className="bg-services grid gap-4 p-6 content-start rounded-[24px]">
