@@ -19,6 +19,7 @@ export function TranslationServices() {
     per: string;
     style: string;
     format: string;
+    available_formats: string[];
     options: string[];
     href: string;
   }[] = translation_services.tbody.reduce(
@@ -30,13 +31,16 @@ export function TranslationServices() {
         per: body[3].value,
         style: body[4].value,
         format: body[5].value,
-        options: body[6].value.split("##-##"),
-        href: body[7].value,
+        available_formats: body[6].value.split("##-##"),
+        options: body[7].value.split("##-##"),
+        href: body[8].value,
       });
       return prev;
     },
     []
   );
+
+  console.log(parsedTranslationServices);
 
   return (
     <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-3">
@@ -53,7 +57,17 @@ export function TranslationServices() {
         />
       </div>
       {parsedTranslationServices.map(
-        ({ title, description, price, per, style, format, options, href }) => (
+        ({
+          title,
+          description,
+          price,
+          per,
+          style,
+          format,
+          available_formats,
+          options,
+          href,
+        }) => (
           <div
             key={title}
             className="grid p-6 gap-4 grid-rows-[1fr_auto] bg-ffffff rounded-[24px]"
@@ -86,9 +100,22 @@ export function TranslationServices() {
                   </Text>
                   <div className="flex gap-2">
                     <Text variant="Paragraph/Paragraph-2">{format}</Text>
-                    <Text className="bg-[#F0F7F7] text-589999 px-2 rounded-full text-center">
-                      +8
-                    </Text>
+                    <div className="group relative">
+                      <Text className="bg-[#F0F7F7] text-589999 px-2 rounded-full text-center">
+                        +{available_formats.length}
+                      </Text>
+                      <div className="group-hover:grid hidden gap-2 grid-cols-3 shadow-[6px_6px_30px_rgba(181,_181,_181,_0.25)] absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-ffffff w-[calc(80px*3)] p-4 rounded-[12px] after:absolute after:left-1/2 after:-translate-y-[8px] after:bg-ffffff after:-z-10 after:rotate-45 after:w-[16px] after:aspect-square after:-translate-x-1/2">
+                        {available_formats.map((available_format) => (
+                          <Text
+                            variant="Paragraph/Paragraph-2"
+                            key={available_format}
+                            className="bg-f6f6f6 rounded-[2px] text-center"
+                          >
+                            {available_format}
+                          </Text>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
