@@ -11,18 +11,20 @@ interface Props
 }
 
 const styleBy: Record<Required<Props>["variant"], ClassValue> = {
-  filled: "bg-da5001 text-ffffff px-4",
-  outlined: "border border-da5001 text-da5001 px-4",
-  ghost: "h-[50px] text-da5001",
-  filledBlack: "bg-1d1c19 text-ffffff rounded-[8px]",
-  outlinedBlack: "border border-1d1c19 text-1d1c19 rounded-[8px]",
+  filled: "bg-da5001 text-ffffff px-4 hover:opacity-70",
+  outlined:
+    "border border-da5001 text-da5001 px-4 hover:bg-da5001 hover:text-ffffff",
+  ghost: "h-[50px] text-da5001 hover:opacity-70",
+  filledBlack: "bg-1d1c19 text-ffffff rounded-[8px] hover:opacity-70",
+  outlinedBlack:
+    "border border-1d1c19 text-1d1c19 rounded-[8px] hover:opacity-70",
 };
 
 export function Button({ variant = "filled", className, ...props }: Props) {
   return (
     <button
       className={cn(
-        "text-[16px] leading-[24px] h-[50px] font-bold font-caption py-[13px] rounded-[40px] grid grid-flow-col items-center justify-center gap-2 hover:opacity-85 transition-all active:scale-95",
+        "text-[16px] leading-[24px] h-[50px] font-bold font-caption py-[13px] rounded-[40px] grid grid-flow-col items-center justify-center gap-2 transition-all active:scale-95",
         styleBy[variant],
         className
       )}
