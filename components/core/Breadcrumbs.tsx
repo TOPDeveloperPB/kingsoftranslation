@@ -3,8 +3,8 @@ import { HomeIcon } from "@/public/icons";
 import { Text } from "./Text";
 
 const MOCK_PATH = [
-  { name: "Bradcrumbs", path: "/first" },
-  { name: "Bradcrumbs", path: "/second" },
+  { name: "Bradcrumbs", path: "/" },
+  { name: "Bradcrumbs", path: "/" },
 ];
 
 export function Breadcrumbs() {
@@ -18,7 +18,7 @@ export function Breadcrumbs() {
         return (
           <Link
             href={path}
-            key={path}
+            key={index}
             className="grid grid-flow-col gap-1 items-center cursor-pointer"
           >
             <Text className="w-[18px] text-center aspect-square">/</Text>

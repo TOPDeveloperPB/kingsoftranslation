@@ -16,13 +16,6 @@ const pt_sans_caption = PT_Sans_Caption({
   variable: "--caption",
 });
 
-// import { storyblokInit, apiPlugin } from "@storyblok/react";
-
-// storyblokInit({
-//   accessToken: "Q4vYnoU8FkPykr9j6pwIlwtt",
-//   use: [apiPlugin],
-// });
-
 export const metadata: Metadata = {
   title: "Kings of translation",
   description: "Kings of translation app for translations",
