@@ -1,12 +1,13 @@
 "use client";
+import Link from "next/link";
+import { useHomeCtx } from ".";
 import Image from "next/image";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { countries } from "country-flags-svg";
 import { ArrowSwapIcon } from "@/public/icons";
-import { Button, Select, Text } from "@/components/core";
-import { languagesMap } from "@/lib/const";
-import { useHomeCtx } from ".";
-import Link from "next/link";
 import { storyblokEditable } from "@storyblok/react";
+import { Button, Select, Text } from "@/components/core";
 
 interface LanguagePair {
   first?: string;
@@ -20,9 +21,6 @@ export function WhatLanguageDoWeTranslate() {
     );
   const [languages, setLanguages] = useState<LanguagePair>();
 
-  const handleLanguageChange = (name: keyof LanguagePair, value: string) =>
-    setLanguages((prev) => ({ ...prev, [name]: value }));
-
   const handleSwap = () =>
     setLanguages((prev) => ({ first: prev?.second, second: prev?.first }));
 
@@ -30,8 +28,15 @@ export function WhatLanguageDoWeTranslate() {
 
   if (!component) return <></>;
 
-  const { title, description, image, success, main_button, secondary_button } =
-    component;
+  const {
+    title,
+    description,
+    image,
+    success,
+    same_language,
+    main_button,
+    secondary_button,
+  } = component;
 
   const successWithValues = success
     .replace("{languages.first}", languages?.first)
@@ -64,8 +69,38 @@ export function WhatLanguageDoWeTranslate() {
             <div className="grid grid-cols-[1fr_auto_1fr] gap-[13px]">
               <Select
                 value={languages?.first}
-                options={Array.from(languagesMap.values())}
-                onChange={(value) => handleLanguageChange("first", value)}
+                options={countries.map(({ name }) => name)}
+                renderer={(option) => {
+                  return (
+                    <div
+                      key={option}
+                      className={cn(
+                        "p-[5px_10px] cursor-pointer rounded-[6px] grid grid-flow-col justify-start gap-2.5 items-center transition-colors hover:bg-[#FFF5F0] hover:text-da5001",
+                        option === languages?.first &&
+                          "bg-[#ddd] hover:bg-[#FFF5F0] hover:text-da5001"
+                      )}
+                      onClick={() =>
+                        setLanguages((prev) => ({ ...prev, first: option }))
+                      }
+                    >
+                      <Image
+                        src={
+                          countries.find(({ name }) => name === option)?.flag ||
+                          ""
+                        }
+                        alt={`${option} flag`}
+                        width={11}
+                        height={16}
+                      />
+                      <Text
+                        variant="Paragraph/Paragraph-2"
+                        className="text-inherit"
+                      >
+                        {option}
+                      </Text>
+                    </div>
+                  );
+                }}
               />
               <button
                 onClick={handleSwap}
@@ -75,13 +110,45 @@ export function WhatLanguageDoWeTranslate() {
               </button>
               <Select
                 value={languages?.second}
-                options={Array.from(languagesMap.values())}
-                onChange={(value) => handleLanguageChange("second", value)}
+                options={countries.map(({ name }) => name)}
+                renderer={(option) => {
+                  return (
+                    <div
+                      key={option}
+                      className={cn(
+                        "p-[5px_10px] cursor-pointer rounded-[6px] grid grid-flow-col justify-start gap-2.5 items-center transition-colors hover:bg-[#FFF5F0] hover:text-da5001",
+                        option === languages?.second &&
+                          "bg-[#ddd] hover:bg-[#FFF5F0] hover:text-da5001"
+                      )}
+                      onClick={() =>
+                        setLanguages((prev) => ({ ...prev, second: option }))
+                      }
+                    >
+                      <Image
+                        src={
+                          countries.find(({ name }) => name === option)?.flag ||
+                          ""
+                        }
+                        alt={`${option} flag`}
+                        width={11}
+                        height={16}
+                      />
+                      <Text
+                        variant="Paragraph/Paragraph-2"
+                        className="text-inherit"
+                      >
+                        {option}
+                      </Text>
+                    </div>
+                  );
+                }}
               />
             </div>
             {areBothLanguagesSelected && (
               <Text variant="Heading/Heading-5" className="text-589999">
-                {successWithValues}
+                {languages.first === languages.second
+                  ? same_language
+                  : successWithValues}
               </Text>
             )}
           </div>

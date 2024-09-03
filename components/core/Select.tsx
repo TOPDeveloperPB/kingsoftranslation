@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Text } from "./Text";
 import { Input } from "./Input";
-import { ArrowDropDownIcon, SearchIcon } from "@/public/icons";
 import { cn } from "@/lib/utils";
+import { ArrowDropDownIcon } from "@/public/icons";
+import { ReactNode, useEffect, useState } from "react";
 
 interface Props {
   value?: string;
@@ -11,6 +11,7 @@ interface Props {
   defaultValue?: string;
   placeholder?: string;
   onChange?: (value: string) => void;
+  renderer?: (value: string, index?: number, array?: string[]) => ReactNode;
 }
 
 export function Select({
@@ -19,6 +20,7 @@ export function Select({
   options,
   placeholder = "Select a value",
   onChange,
+  renderer,
 }: Props) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -60,34 +62,38 @@ export function Select({
         />
       </div>
       {open && (
-        <div className="absolute top-full w-full left-0 grid gap-1 max-h-[calc(5*56px+4*4px)] overflow-y-auto border bg-fbfbfb">
-          <div className="sticky top-0 p-1 bg-fbfbfb">
+        <div className="absolute top-full w-full left-0 grid gap-1 max-h-[calc(5*56px+4*4px)] overflow-y-auto border bg-ffffff">
+          <div className="sticky top-0 p-1 bg-ffffff">
             <Input
               value={search}
-              icon={<SearchIcon />}
-              placeholder="Search"
+              placeholder="Search..."
               onChange={({ currentTarget: { value } }) => setSearch(value)}
+              className="h-[38px]"
             />
           </div>
-          <div className="grid gap-1 p-1 pt-0">
+          <div className="grid gap-1 p-1 pt-0" onClick={toggleOpen}>
             {options
               ?.filter((option) =>
                 option.toLowerCase().includes(search.toLowerCase())
               )
-              ?.map((option) => (
-                <Text
-                  key={option}
-                  variant="Paragraph/Paragraph-2"
-                  onClick={() => handleChange(option)}
-                  className={cn(
-                    "p-4 cursor-pointer border border-[#DADADA] rounded-[6px] h-[56px] grid items-center bg-ffffff transition-colors hover:bg-fbfbfb",
-                    option === valueState &&
-                      "hover:bg-[#FFF5F0] hover:text-da5001 bg-[#FFF5F0] text-da5001"
-                  )}
-                >
-                  {option}
-                </Text>
-              ))}
+              ?.map(
+                renderer
+                  ? renderer
+                  : (option) => (
+                      <Text
+                        key={option}
+                        variant="Paragraph/Paragraph-2"
+                        onClick={() => handleChange(option)}
+                        className={cn(
+                          "p-4 cursor-pointer border border-[#DADADA] rounded-[6px] h-[56px] grid items-center bg-ffffff transition-colors hover:bg-fbfbfb",
+                          option === valueState &&
+                            "hover:bg-[#FFF5F0] hover:text-da5001 bg-[#FFF5F0] text-da5001"
+                        )}
+                      >
+                        {option}
+                      </Text>
+                    )
+              )}
           </div>
         </div>
       )}

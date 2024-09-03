@@ -764,6 +764,11 @@ consola@^3.2.3:
   resolved "https://registry.yarnpkg.com/consola/-/consola-3.2.3.tgz#0741857aa88cfa0d6fd53f1cff0375136e98502f"
   integrity sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==
 
+country-flags-svg@^2.0.0-beta.1:
+  version "2.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/country-flags-svg/-/country-flags-svg-2.0.0-beta.1.tgz#c836d2a0702a9959a1d429c9609bcd990e48e5a7"
+  integrity sha512-nOJOoClV+Jy6sftBAJ7R1j+0zMu45T/ljZWP4lCCwcImRn5/55LapjNU+NM/gFiEGdKTEOiiyDpGn5yGaBHgsg==
+
 cross-spawn@^7.0.0, cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
