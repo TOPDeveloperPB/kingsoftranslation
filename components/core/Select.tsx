@@ -3,7 +3,8 @@ import { Text } from "./Text";
 import { Input } from "./Input";
 import { cn } from "@/lib/utils";
 import { ArrowDropDownIcon } from "@/public/icons";
-import { ReactNode, useEffect, useState } from "react";
+import { useClickOutside } from "@/lib/useClickOutside";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface Props {
   value?: string;
@@ -27,6 +28,8 @@ export function Select({
   const toggleOpen = () => setOpen((prev) => !prev);
   const [valueState, setValueState] = useState(defaultValue || value || "");
 
+  const selectRef = useRef<HTMLDivElement>(null);
+
   const handleChange = (value: string) => {
     setValueState(value);
     onChange?.(value);
@@ -37,8 +40,10 @@ export function Select({
     value && setValueState(value);
   }, [value]);
 
+  useClickOutside(selectRef, () => setOpen(false));
+
   return (
-    <div className="relative">
+    <div className="relative" ref={selectRef}>
       <div
         onClick={toggleOpen}
         className={cn(
