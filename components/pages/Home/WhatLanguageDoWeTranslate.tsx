@@ -69,7 +69,7 @@ export function WhatLanguageDoWeTranslate() {
             <div className="grid grid-cols-[1fr_auto_1fr] gap-[13px]">
               <Select
                 value={languages?.first}
-                options={countries.map(({ name }) => name)}
+                options={countries.map(({ demonym }) => demonym)}
                 renderer={(option) => {
                   return (
                     <div
@@ -85,8 +85,8 @@ export function WhatLanguageDoWeTranslate() {
                     >
                       <Image
                         src={
-                          countries.find(({ name }) => name === option)?.flag ||
-                          ""
+                          countries.find(({ demonym }) => demonym === option)
+                            ?.flag || ""
                         }
                         alt={`${option} flag`}
                         width={11}
@@ -110,7 +110,7 @@ export function WhatLanguageDoWeTranslate() {
               </button>
               <Select
                 value={languages?.second}
-                options={countries.map(({ name }) => name)}
+                options={countries.map(({ demonym }) => demonym)}
                 renderer={(option) => {
                   return (
                     <div
@@ -126,8 +126,8 @@ export function WhatLanguageDoWeTranslate() {
                     >
                       <Image
                         src={
-                          countries.find(({ name }) => name === option)?.flag ||
-                          ""
+                          countries.find(({ demonym }) => demonym === option)
+                            ?.flag || ""
                         }
                         alt={`${option} flag`}
                         width={11}
