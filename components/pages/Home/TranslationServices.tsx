@@ -121,7 +121,7 @@ export function TranslationServices() {
                 {options.map((option) => (
                   <div key={option} className="flex gap-2 items-center">
                     <CheckCircleIcon />
-                    <Text>{option}</Text>
+                    <Text variant="Paragraph/Paragraph-2">{option}</Text>
                   </div>
                 ))}
               </div>
