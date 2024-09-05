@@ -31,7 +31,7 @@ export function MakeYourNextMove() {
             dangerouslySetInnerHTML={{ __html: description }}
           />
         </div>
-        <div className="flex gap-4 [&>*]:min-w-[175px]">
+        <div className="flex gap-4 [&>*]:min-w-[175px] [&>*]:w-fit">
           <Link href={main_button.url}>
             <Button>{main_button.title}</Button>
           </Link>

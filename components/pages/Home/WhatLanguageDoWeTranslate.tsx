@@ -4,10 +4,11 @@ import { useHomeCtx } from ".";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { countries } from "country-flags-svg";
 import { ArrowSwapIcon } from "@/public/icons";
 import { storyblokEditable } from "@storyblok/react";
 import { Button, Select, Text } from "@/components/core";
+import { findFlagUrlByIso2Code } from "country-flags-svg";
+import { euFlagPlaceholder, languagesOptions } from "@/lib/const";
 
 interface LanguagePair {
   first?: string;
@@ -19,12 +20,14 @@ export function WhatLanguageDoWeTranslate() {
     component = data.find(
       (data) => data.component === "WhatLanguageDoWeTranslate"
     );
-  const [languages, setLanguages] = useState<LanguagePair>();
+
+  const [languagesState, setLanguagesState] = useState<LanguagePair>();
 
   const handleSwap = () =>
-    setLanguages((prev) => ({ first: prev?.second, second: prev?.first }));
+    setLanguagesState((prev) => ({ first: prev?.second, second: prev?.first }));
 
-  const areBothLanguagesSelected = !!languages?.first && !!languages.second;
+  const areBothLanguagesSelected =
+    !!languagesState?.first && !!languagesState.second;
 
   if (!component) return <></>;
 
@@ -39,8 +42,101 @@ export function WhatLanguageDoWeTranslate() {
   } = component;
 
   const successWithValues = success
-    .replace("{languages.first}", languages?.first)
-    .replace("{languages.second}", languages?.second);
+    .replace("{languages.first}", languagesState?.first)
+    .replace("{languages.second}", languagesState?.second);
+
+  const filterOptions = (
+    option: (typeof languagesOptions)[number],
+    search: string
+  ) => {
+    const searchLower = search.toLowerCase();
+
+    if (searchLower.length > 0 && typeof option !== "string" && option.top) {
+      return false;
+    }
+
+    if (typeof option === "string") {
+      return option.toLowerCase().includes(searchLower);
+    } else if (option.value.toLowerCase().includes(searchLower)) {
+      return true;
+    } else if (option.subs) {
+      return option.subs.some(({ value }) =>
+        value.toLowerCase().includes(searchLower)
+      );
+    }
+
+    return false;
+  };
+
+  const renderOption = (
+    test: keyof LanguagePair,
+    option: (typeof languagesOptions)[number],
+    index?: number,
+    _?: typeof languagesOptions
+  ) => {
+    if (typeof option === "string")
+      return (
+        <Text
+          key={option}
+          variant="Paragraph/Paragraph-2"
+          className="text-[#999] text-center"
+        >
+          {option}
+        </Text>
+      );
+
+    return (
+      <div key={option.value + index}>
+        <div
+          className={cn(
+            "p-[5px_10px] cursor-pointer rounded-[6px] grid grid-flow-col justify-start gap-2.5 items-center transition-colors hover:bg-[#FFF5F0] hover:text-da5001",
+            option.value === languagesState?.[test] &&
+              "bg-[#ddd] hover:bg-[#FFF5F0] hover:text-da5001"
+          )}
+          onClick={() =>
+            setLanguagesState((prev) => ({ ...prev, [test]: option.value }))
+          }
+        >
+          <Image
+            src={findFlagUrlByIso2Code(option.flag) || euFlagPlaceholder}
+            alt={`${option.value} flag`}
+            width="0"
+            height="0"
+            className="w-[16px] h-auto"
+          />
+          <Text variant="Paragraph/Paragraph-2" className="text-inherit">
+            {option.value}
+          </Text>
+        </div>
+        {option.subs?.map(({ value, flag }, index) => {
+          return (
+            <div
+              key={value + index}
+              className={cn(
+                "p-[5px_10px_5px_30px] cursor-pointer rounded-[6px] grid grid-flow-col justify-start gap-2.5 items-center transition-colors hover:bg-[#FFF5F0] hover:text-da5001",
+                value === languagesState?.[test] &&
+                  "bg-[#ddd] hover:bg-[#FFF5F0] hover:text-da5001"
+              )}
+              onClick={() =>
+                setLanguagesState((prev) => ({ ...prev, [test]: value }))
+              }
+            >
+              <Image
+                src={findFlagUrlByIso2Code(flag) || euFlagPlaceholder}
+                alt={`${value} flag`}
+                width="0"
+                height="0"
+                className="w-[16px] h-auto"
+              />
+              <Text variant="Paragraph/Paragraph-2" className="text-inherit">
+                {value}
+              </Text>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <div
@@ -68,39 +164,10 @@ export function WhatLanguageDoWeTranslate() {
             />
             <div className="grid grid-cols-[1fr_auto_1fr] gap-[13px]">
               <Select
-                value={languages?.first}
-                options={countries.map(({ demonym }) => demonym)}
-                renderer={(option) => {
-                  return (
-                    <div
-                      key={option}
-                      className={cn(
-                        "p-[5px_10px] cursor-pointer rounded-[6px] grid grid-flow-col justify-start gap-2.5 items-center transition-colors hover:bg-[#FFF5F0] hover:text-da5001",
-                        option === languages?.first &&
-                          "bg-[#ddd] hover:bg-[#FFF5F0] hover:text-da5001"
-                      )}
-                      onClick={() =>
-                        setLanguages((prev) => ({ ...prev, first: option }))
-                      }
-                    >
-                      <Image
-                        src={
-                          countries.find(({ demonym }) => demonym === option)
-                            ?.flag || ""
-                        }
-                        alt={`${option} flag`}
-                        width={11}
-                        height={16}
-                      />
-                      <Text
-                        variant="Paragraph/Paragraph-2"
-                        className="text-inherit"
-                      >
-                        {option}
-                      </Text>
-                    </div>
-                  );
-                }}
+                value={languagesState?.first}
+                options={languagesOptions}
+                filterer={filterOptions}
+                renderer={(...rest) => renderOption("first", ...rest)}
               />
               <button
                 onClick={handleSwap}
@@ -109,44 +176,15 @@ export function WhatLanguageDoWeTranslate() {
                 <ArrowSwapIcon />
               </button>
               <Select
-                value={languages?.second}
-                options={countries.map(({ demonym }) => demonym)}
-                renderer={(option) => {
-                  return (
-                    <div
-                      key={option}
-                      className={cn(
-                        "p-[5px_10px] cursor-pointer rounded-[6px] grid grid-flow-col justify-start gap-2.5 items-center transition-colors hover:bg-[#FFF5F0] hover:text-da5001",
-                        option === languages?.second &&
-                          "bg-[#ddd] hover:bg-[#FFF5F0] hover:text-da5001"
-                      )}
-                      onClick={() =>
-                        setLanguages((prev) => ({ ...prev, second: option }))
-                      }
-                    >
-                      <Image
-                        src={
-                          countries.find(({ demonym }) => demonym === option)
-                            ?.flag || ""
-                        }
-                        alt={`${option} flag`}
-                        width={11}
-                        height={16}
-                      />
-                      <Text
-                        variant="Paragraph/Paragraph-2"
-                        className="text-inherit"
-                      >
-                        {option}
-                      </Text>
-                    </div>
-                  );
-                }}
+                value={languagesState?.second}
+                options={languagesOptions}
+                filterer={filterOptions}
+                renderer={(...rest) => renderOption("second", ...rest)}
               />
             </div>
             {areBothLanguagesSelected && (
               <Text variant="Heading/Heading-5" className="text-589999">
-                {languages.first === languages.second
+                {languagesState.first === languagesState.second
                   ? same_language
                   : successWithValues}
               </Text>
