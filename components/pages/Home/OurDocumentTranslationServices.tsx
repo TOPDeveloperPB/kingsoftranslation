@@ -1,40 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useHomeCtx } from ".";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CSSProperties, useState } from "react";
 import { storyblokEditable } from "@storyblok/react";
 import { Button, Input, Text } from "@/components/core";
-import {
-  ArrowIcon,
-  ArrowDropDownIcon,
-  SearchIcon,
-  AcademicIcon,
-  AdoptionIcon,
-  BirthIcon,
-  BonusIcon,
-  CarIcon,
-  DeathIcon,
-  DiplomaIcon,
-  ImpedimentIcon,
-  MarriageIcon,
-  PassportIcon,
-} from "@/public/icons";
 import { IStoryBlokAsset, IStoryBlokComponent } from "@/types";
-import Image from "next/image";
-
-const servicesIconsMap = new Map([
-  ["Passport", <PassportIcon key="Passport" />],
-  ["Marriage", <MarriageIcon key="Marriage" />],
-  ["Birth", <BirthIcon key="Birth" />],
-  ["Death", <DeathIcon key="Death" />],
-  ["Diploma", <DiplomaIcon key="Diploma" />],
-  ["Academic", <AcademicIcon key="Academic" />],
-  ["Bonus", <BonusIcon key="Bonus" />],
-  ["Adoption", <AdoptionIcon key="Adoption" />],
-  ["Impediment", <ImpedimentIcon key="Impediment" />],
-  ["Car", <CarIcon key="Car" />],
-]);
+import { ArrowIcon, ArrowDropDownIcon, SearchIcon } from "@/public/icons";
 
 interface IService extends IStoryBlokComponent {
   href: string;
