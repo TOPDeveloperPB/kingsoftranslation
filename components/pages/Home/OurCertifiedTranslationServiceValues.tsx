@@ -19,7 +19,9 @@ export function OurCertifiedTranslationServiceValues() {
       (data) => data.component === "OurCertifiedTranslationServiceValues"
     );
 
-  const [expandedValueId, setExpandedValueId] = useState<string>();
+  const [expandedValueIndex, setExpandedValueIndex] = useState<
+    number | undefined
+  >(0);
 
   if (!component) return <></>;
 
@@ -32,10 +34,6 @@ export function OurCertifiedTranslationServiceValues() {
     values_title,
     values,
   } = component;
-
-  useEffect(() => {
-    setExpandedValueId((values as IValueSB[])[0]._uid);
-  }, []);
 
   return (
     <div {...storyblokEditable(component)} className="grid gap-6">
@@ -70,11 +68,11 @@ export function OurCertifiedTranslationServiceValues() {
             dangerouslySetInnerHTML={{ __html: values_title }}
           />
           {(values as IValueSB[]).map(({ title, description, _uid }, index) => {
-            const isExpanded = _uid === expandedValueId;
+            const isExpanded = index === expandedValueIndex;
             const handleExpand = () =>
               isExpanded
-                ? setExpandedValueId(undefined)
-                : setExpandedValueId(_uid);
+                ? setExpandedValueIndex(undefined)
+                : setExpandedValueIndex(index);
 
             return (
               <div

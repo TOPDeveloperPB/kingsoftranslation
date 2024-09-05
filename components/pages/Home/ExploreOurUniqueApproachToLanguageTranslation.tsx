@@ -1,5 +1,5 @@
 import { Text } from "@/components/core";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { storyblokEditable } from "@storyblok/react";
 import { useHomeCtx } from ".";
@@ -39,7 +39,6 @@ export function ExploreOurUniqueApproachToLanguageTranslation() {
   if (!component) return <></>;
 
   const { title, description, translation_values } = component;
-  console.log(translation_values);
 
   return (
     <div {...storyblokEditable(component)} className="grid gap-6">
@@ -78,14 +77,13 @@ export function ExploreOurUniqueApproachToLanguageTranslation() {
                 >
                   {name}
                 </Text>
-                {description.map(({ value }, index) => (
+                {description.map(({ value }) => (
                   <Text
-                    key={index}
+                    key={value}
                     variant="Paragraph/Paragraph-2"
                     className="text-7e7e7e"
-                  >
-                    {value}
-                  </Text>
+                    dangerouslySetInnerHTML={{ __html: value }}
+                  />
                 ))}
               </Link>
             );
