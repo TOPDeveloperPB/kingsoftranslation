@@ -5,6 +5,7 @@ import ATA from "@/public/images/ATA.png";
 import BBB from "@/public/images/BBB.png";
 import { storyblokEditable } from "@storyblok/react";
 import { USCISIcon, RatingIcon } from "@/public/icons";
+import { IStoryBlokComponentStringWithImage } from "@/types";
 
 const achievementsIconsMap = new Map([
   [
@@ -45,38 +46,26 @@ export function Achievements() {
 
   const { achievements } = component;
 
-  const parsedAchievements: {
-    icon: JSX.Element;
-    name: string;
-  }[] = achievements.tbody.reduce(
-    (prev: any[], { body }: { body: { value: string }[] }) => {
-      prev.push({
-        name: body[0].value,
-        icon: achievementsIconsMap.get(body[0].value),
-      });
-      return prev;
-    },
-    []
-  );
-
   return (
     <div
       {...storyblokEditable(component)}
       className="bg-[#FFF5F0] p-8 rounded-[24px] grid grid-cols-4 gap-[21.33px] justify-between items-end"
     >
-      {parsedAchievements.map(({ name, icon }) => (
-        <div
-          key={name}
-          className="grid gap-6 justify-items-center content-start"
-        >
-          {icon}
-          <Text
-            variant="Paragraph/Paragraph-2"
-            className="text-center"
-            dangerouslySetInnerHTML={{ __html: name }}
-          />
-        </div>
-      ))}
+      {(achievements as IStoryBlokComponentStringWithImage[]).map(
+        ({ value, image, _uid }) => (
+          <div
+            key={_uid}
+            className="grid gap-6 justify-items-center content-start"
+          >
+            {achievementsIconsMap.get(value)}
+            <Text
+              variant="Paragraph/Paragraph-2"
+              className="text-center"
+              dangerouslySetInnerHTML={{ __html: value }}
+            />
+          </div>
+        )
+      )}
     </div>
   );
 }

@@ -15,6 +15,7 @@ import {
 } from "@/public/icons/flags";
 import Link from "next/link";
 import { storyblokEditable } from "@storyblok/react";
+import { IStoryBlokComponentString } from "@/types";
 
 const languagesFlagsMap = new Map([
   ["Spanish", <Spanish key="Spanish" />],
@@ -39,19 +40,6 @@ export function ChooseBetweenLanguages() {
 
   const { title, description, link, languages_title, languages } = component;
 
-  const parsedLanguages: {
-    name: string;
-    flag: JSX.Element;
-  }[] = languages.tbody.reduce(
-    (prev: any[], { body }: { body: { value: string }[] }) => {
-      prev.push({
-        name: body[0].value,
-        flag: languagesFlagsMap.get(body[0].value),
-      });
-      return prev;
-    },
-    []
-  );
   return (
     <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-2">
       <div className="grid gap-4">
@@ -80,11 +68,11 @@ export function ChooseBetweenLanguages() {
           dangerouslySetInnerHTML={{ __html: languages_title }}
         />
         <div className="grid gap-[24px_48px] grid-cols-2">
-          {parsedLanguages.map(({ name, flag }) => (
-            <div key={name} className="flex gap-2 items-center ">
-              {flag}
+          {(languages as IStoryBlokComponentString[]).map(({ value }) => (
+            <div key={value} className="flex gap-2 items-center ">
+              {languagesFlagsMap.get(value)}
               <Text variant="Paragraph/Paragraph-1" className="text-121212">
-                {name}
+                {value}
               </Text>
             </div>
           ))}

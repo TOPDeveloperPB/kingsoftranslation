@@ -1,6 +1,13 @@
 import { storyblokEditable } from "@storyblok/react";
 import { useHomeCtx } from ".";
 import { Text } from "@/components/core";
+import { IStoryBlokComponent } from "@/types";
+
+interface IOptionSB extends IStoryBlokComponent {
+  title: string;
+  component: string;
+  description: string;
+}
 
 export function WhatMakesKingsOfTranslationTheBestChoice() {
   const data = useHomeCtx(),
@@ -11,17 +18,6 @@ export function WhatMakesKingsOfTranslationTheBestChoice() {
   if (!component) return <></>;
 
   const { options, title, description } = component;
-
-  const parsedOptions: {
-    value: string;
-    description: string;
-  }[] = options.tbody.reduce(
-    (prev: any[], { body }: { body: { value: string }[] }) => {
-      prev.push({ value: body[0].value, description: body[1].value });
-      return prev;
-    },
-    []
-  );
 
   return (
     <div
@@ -40,13 +36,13 @@ export function WhatMakesKingsOfTranslationTheBestChoice() {
         />
       </div>
       <div className="grid grid-cols-2 gap-4 content-center">
-        {parsedOptions.map(({ value, description }) => (
+        {(options as IOptionSB[]).map(({ title, description }) => (
           <div
-            key={value}
+            key={title}
             className="grid gap-1 p-[24px_32px] bg-f0f7f7 rounded-[16px] h-[121px]"
           >
             <Text className="text-589999" variant="Heading/Heading-3">
-              {value}
+              {title}
             </Text>
             <Text variant="Paragraph/Paragraph-3" className="text-121212">
               {description}

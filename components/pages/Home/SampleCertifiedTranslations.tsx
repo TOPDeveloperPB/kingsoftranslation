@@ -1,5 +1,6 @@
-import { Text } from "@/components/core";
 import { useHomeCtx } from ".";
+import { Text } from "@/components/core";
+import { IStoryBlokComponentString } from "@/types";
 import { storyblokEditable } from "@storyblok/react";
 
 export function SampleCertifiedTranslations() {
@@ -12,13 +13,6 @@ export function SampleCertifiedTranslations() {
 
   const { title, description, samples } = component;
 
-  const parsedLanguages: string[] = samples.tbody.reduce(
-    (prev: any[], { body }: { body: { value: string }[] }) => {
-      prev.push(body[0].value);
-      return prev;
-    },
-    []
-  );
   return (
     <div
       {...storyblokEditable(component)}
@@ -37,11 +31,11 @@ export function SampleCertifiedTranslations() {
         />
       </div>
       <div className="grid grid-cols-3 gap-4">
-        {parsedLanguages.map((sample) => (
-          <div key={sample} className="grid gap-2 ">
+        {(samples as IStoryBlokComponentString[]).map(({ value }) => (
+          <div key={value} className="grid gap-2 ">
             <div className="border border-[#C0E3E3] bg-ffffff h-[254px] rounded-[16px]" />
             <Text className="pl-2" variant="Heading/Heading-5">
-              {sample}
+              {value}
             </Text>
           </div>
         ))}

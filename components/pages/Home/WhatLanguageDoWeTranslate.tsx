@@ -56,12 +56,12 @@ export function WhatLanguageDoWeTranslate() {
     }
 
     if (typeof option === "string") {
-      return option.toLowerCase().includes(searchLower);
-    } else if (option.value.toLowerCase().includes(searchLower)) {
+      return option.toLowerCase().startsWith(searchLower);
+    } else if (option.value.toLowerCase().startsWith(searchLower)) {
       return true;
     } else if (option.subs) {
       return option.subs.some(({ value }) =>
-        value.toLowerCase().includes(searchLower)
+        value.toLowerCase().startsWith(searchLower)
       );
     }
 

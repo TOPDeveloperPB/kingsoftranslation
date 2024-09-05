@@ -8,6 +8,7 @@ import {
   GovernmentIcon,
   SocialSecurityAdministrationIcon,
 } from "@/public/icons";
+import { IStoryBlokComponentStringWithImage } from "@/types";
 
 const acceptsIconsMap = new Map([
   [
@@ -33,20 +34,6 @@ export function WhoAcceptsOurCertifiedLanguageTranslations() {
 
   const { title, accepts } = component;
 
-  const parsedAccepts: {
-    icon: JSX.Element;
-    name: string;
-  }[] = accepts.tbody.reduce(
-    (prev: any[], { body }: { body: { value: string }[] }) => {
-      prev.push({
-        name: body[0].value,
-        icon: acceptsIconsMap.get(body[0].value),
-      });
-      return prev;
-    },
-    []
-  );
-
   return (
     <div {...storyblokEditable(component)} className="grid gap-6">
       <Text
@@ -55,15 +42,17 @@ export function WhoAcceptsOurCertifiedLanguageTranslations() {
         dangerouslySetInnerHTML={{ __html: title }}
       />
       <div className="grid grid-cols-5 gap-4">
-        {parsedAccepts.map(({ icon, name }) => (
-          <div
-            key={name}
-            className="bg-f6f6f6 p-4 grid gap-6 rounded-[16px] content-start"
-          >
-            {icon}
-            <Text variant="Paragraph/Paragraph-2">{name}</Text>
-          </div>
-        ))}
+        {(accepts as IStoryBlokComponentStringWithImage[]).map(
+          ({ value, image }) => (
+            <div
+              key={value}
+              className="bg-f6f6f6 p-4 grid gap-6 rounded-[16px] content-start"
+            >
+              {acceptsIconsMap.get(value)}
+              <Text variant="Paragraph/Paragraph-2">{value}</Text>
+            </div>
+          )
+        )}
       </div>
     </div>
   );

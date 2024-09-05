@@ -1,10 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Text } from "@/components/core";
 import { ArrowDropDownIcon } from "@/public/icons";
 import { useHomeCtx } from ".";
 import { storyblokEditable } from "@storyblok/react";
+import { IStoryBlokComponent } from "@/types";
+
+interface IValueSB extends IStoryBlokComponent {
+  title: string;
+  component: string;
+  description: string;
+}
 
 export function OurCertifiedTranslationServiceValues() {
   const data = useHomeCtx(),
@@ -12,9 +19,7 @@ export function OurCertifiedTranslationServiceValues() {
       (data) => data.component === "OurCertifiedTranslationServiceValues"
     );
 
-  const [expandedValueIndex, setExpandedValueIndex] = useState<
-    number | undefined
-  >(0);
+  const [expandedValueId, setExpandedValueId] = useState<string>();
 
   if (!component) return <></>;
 
@@ -28,19 +33,9 @@ export function OurCertifiedTranslationServiceValues() {
     values,
   } = component;
 
-  const parsedValues: {
-    title: string;
-    description: string;
-  }[] = values.tbody.reduce(
-    (prev: any[], { body }: { body: { value: string }[] }) => {
-      prev.push({
-        title: body[0].value,
-        description: body[1].value,
-      });
-      return prev;
-    },
-    []
-  );
+  useEffect(() => {
+    setExpandedValueId((values as IValueSB[])[0]._uid);
+  }, []);
 
   return (
     <div {...storyblokEditable(component)} className="grid gap-6">
@@ -74,16 +69,16 @@ export function OurCertifiedTranslationServiceValues() {
             variant="Heading/Heading-4"
             dangerouslySetInnerHTML={{ __html: values_title }}
           />
-          {parsedValues.map(({ title, description }, index) => {
-            const isExpanded = index === expandedValueIndex;
+          {(values as IValueSB[]).map(({ title, description, _uid }, index) => {
+            const isExpanded = _uid === expandedValueId;
             const handleExpand = () =>
               isExpanded
-                ? setExpandedValueIndex(undefined)
-                : setExpandedValueIndex(index);
+                ? setExpandedValueId(undefined)
+                : setExpandedValueId(_uid);
 
             return (
               <div
-                key={index}
+                key={_uid}
                 onClick={handleExpand}
                 className={cn(
                   "grid gap-0 grid-rows-[auto_0fr] bg-f6f6f6 cursor-pointer p-6 transition-all rounded-[16px]",

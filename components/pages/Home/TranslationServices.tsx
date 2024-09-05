@@ -3,6 +3,20 @@ import { useHomeCtx } from ".";
 import { Button, Text } from "@/components/core";
 import { CheckCircleIcon } from "@/public/icons";
 import { storyblokEditable } from "@storyblok/react";
+import { IStoryBlokComponentString, IStoryBlokLink } from "@/types";
+
+interface ITranslationServiceSB {
+  per: string;
+  link: IStoryBlokLink;
+  price: string;
+  style: string;
+  title: string;
+  format: string;
+  options: IStoryBlokComponentString[];
+  component: string;
+  description: string;
+  available_formats: IStoryBlokComponentString[];
+}
 
 export function TranslationServices() {
   const data = useHomeCtx(),
@@ -11,34 +25,6 @@ export function TranslationServices() {
   if (!component) return <></>;
 
   const { title, description, translation_services } = component;
-
-  const parsedTranslationServices: {
-    title: string;
-    description: string;
-    price: string;
-    per: string;
-    style: string;
-    format: string;
-    available_formats: string[];
-    options: string[];
-    href: string;
-  }[] = translation_services.tbody.reduce(
-    (prev: any[], { body }: { body: { value: string }[] }) => {
-      prev.push({
-        title: body[0].value,
-        description: body[1].value,
-        price: body[2].value,
-        per: body[3].value,
-        style: body[4].value,
-        format: body[5].value,
-        available_formats: body[6].value.split("##-##"),
-        options: body[7].value.split("##-##"),
-        href: body[8].value,
-      });
-      return prev;
-    },
-    []
-  );
 
   return (
     <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-3">
@@ -54,7 +40,7 @@ export function TranslationServices() {
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </div>
-      {parsedTranslationServices.map(
+      {(translation_services as ITranslationServiceSB[]).map(
         ({
           title,
           description,
@@ -64,7 +50,7 @@ export function TranslationServices() {
           format,
           available_formats,
           options,
-          href,
+          link,
         }) => (
           <div
             key={title}
@@ -96,20 +82,20 @@ export function TranslationServices() {
                   <Text variant="Paragraph/Paragraph-2" className="text-7e7e7e">
                     Delivery Format
                   </Text>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 items-center">
                     <Text variant="Paragraph/Paragraph-2">{format}</Text>
-                    <div className="group relative">
+                    <div className="group relative cursor-help">
                       <Text className="bg-[#F0F7F7] text-589999 px-2 rounded-full text-center">
                         +{available_formats.length}
                       </Text>
                       <div className="group-hover:grid hidden gap-2 grid-cols-3 shadow-[6px_6px_30px_rgba(181,_181,_181,_0.25)] absolute top-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-ffffff w-[calc(80px*3)] p-4 rounded-[12px] after:absolute after:left-1/2 after:-translate-y-[8px] after:bg-ffffff after:-z-10 after:rotate-45 after:w-[16px] after:aspect-square after:-translate-x-1/2">
-                        {available_formats.map((available_format) => (
+                        {available_formats.map(({ value }) => (
                           <Text
                             variant="Paragraph/Paragraph-2"
-                            key={available_format}
+                            key={value}
                             className="bg-f6f6f6 rounded-[2px] text-center"
                           >
-                            {available_format}
+                            {value}
                           </Text>
                         ))}
                       </div>
@@ -118,16 +104,16 @@ export function TranslationServices() {
                 </div>
               </div>
               <div className="grid gap-2">
-                {options.map((option) => (
-                  <div key={option} className="flex gap-2 items-center">
+                {options.map(({ value }) => (
+                  <div key={value} className="flex gap-2 items-center">
                     <CheckCircleIcon />
-                    <Text variant="Paragraph/Paragraph-2">{option}</Text>
+                    <Text variant="Paragraph/Paragraph-2">{value}</Text>
                   </div>
                 ))}
               </div>
             </div>
-            <Link href={href}>
-              <Button>Start Your Order</Button>
+            <Link href={link.url}>
+              <Button>{link.title}</Button>
             </Link>
           </div>
         )
