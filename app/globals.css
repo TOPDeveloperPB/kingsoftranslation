@@ -15,16 +15,6 @@
   padding: 0;
 }
 
-.bg-services {
-  background: url(../public/images/translationServicesBG.png) no-repeat
-    center/cover;
-  min-height: 638px;
-}
-
-.bg-didYouKnow {
-  background: url(../public/images/didYouKnow.png) no-repeat center/cover;
-}
-
 :root {
   --1d1c19: #1d1c19;
   --ffffff: #ffffff;

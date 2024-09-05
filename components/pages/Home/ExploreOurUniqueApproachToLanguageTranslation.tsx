@@ -1,18 +1,14 @@
-import { Text } from "@/components/core";
-import Image from "next/image";
-import Link from "next/link";
-import { storyblokEditable } from "@storyblok/react";
-import { useHomeCtx } from ".";
-import translationManagementSystem from "@/public/images/translationManagementSystem.jpeg";
-import authenticTranslationServices from "@/public/images/authenticTranslationServices.jpeg";
-import translationServiceDeliveryTimes from "@/public/images/translationServiceDeliveryTimes.jpeg";
-import languages from "@/public/images/languages.jpeg";
 import {
+  IStoryBlokLink,
   IStoryBlokAsset,
   IStoryBlokComponent,
   IStoryBlokComponentString,
-  IStoryBlokLink,
 } from "@/types";
+import Link from "next/link";
+import Image from "next/image";
+import { useHomeCtx } from ".";
+import { Text } from "@/components/core";
+import { storyblokEditable } from "@storyblok/react";
 
 interface ITranslationValueSB extends IStoryBlokComponent {
   link: IStoryBlokLink;
@@ -21,13 +17,6 @@ interface ITranslationValueSB extends IStoryBlokComponent {
   component: "Translation Value";
   description: IStoryBlokComponentString[];
 }
-
-const translationValuesIconsMap = new Map([
-  ["Our translation management system (TMS)", translationManagementSystem],
-  ["Our authentic translation services", authenticTranslationServices],
-  ["24/7 translation service delivery times", translationServiceDeliveryTimes],
-  ["120 languages", languages],
-]);
 
 export function ExploreOurUniqueApproachToLanguageTranslation() {
   const data = useHomeCtx(),
@@ -55,8 +44,7 @@ export function ExploreOurUniqueApproachToLanguageTranslation() {
       </div>
       <div className="grid grid-cols-2 gap-6">
         {(translation_values as ITranslationValueSB[]).map(
-          ({ name, description, link }) => {
-            const image = translationValuesIconsMap.get(name)!;
+          ({ name, image, description, link }) => {
             return (
               <Link
                 key={name}
@@ -64,10 +52,10 @@ export function ExploreOurUniqueApproachToLanguageTranslation() {
                 className="bg-f6f6f6 p-6 grid gap-4 content-start rounded-[24px] transition-all hover:opacity-95"
               >
                 <Image
-                  src={image.src}
-                  width={image.width}
-                  height={image.height}
-                  alt={name + " image"}
+                  width={0}
+                  height={0}
+                  src={image.filename}
+                  alt={image.alt || `${name} image`}
                   className="w-full h-[230px] rounded-[16px] object-cover"
                 />
                 <Text

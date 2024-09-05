@@ -21,6 +21,7 @@ import {
   PassportIcon,
 } from "@/public/icons";
 import { IStoryBlokAsset, IStoryBlokComponent } from "@/types";
+import Image from "next/image";
 
 const servicesIconsMap = new Map([
   ["Passport", <PassportIcon key="Passport" />],
@@ -118,7 +119,13 @@ export function OurDocumentTranslationServices() {
                           isActive && "bg-ffffff"
                         )}
                       >
-                        {icon.filename}
+                        <Image
+                          src={icon.filename}
+                          alt={icon.alt || `${title} icon`}
+                          width={0}
+                          height={0}
+                          className="w-9 h-auto max-h-9"
+                        />
                       </div>
                       <div className="grid gap-2">
                         <Text

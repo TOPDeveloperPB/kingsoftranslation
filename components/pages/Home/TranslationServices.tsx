@@ -4,6 +4,7 @@ import { Button, Text } from "@/components/core";
 import { CheckCircleIcon } from "@/public/icons";
 import { storyblokEditable } from "@storyblok/react";
 import { IStoryBlokComponentString, IStoryBlokLink } from "@/types";
+import Image from "next/image";
 
 interface ITranslationServiceSB {
   per: string;
@@ -24,11 +25,18 @@ export function TranslationServices() {
 
   if (!component) return <></>;
 
-  const { title, description, translation_services } = component;
+  const { title, description, image, translation_services } = component;
 
   return (
     <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-3">
-      <div className="bg-services grid gap-4 p-6 content-start rounded-[24px]">
+      <div className="relative grid gap-4 p-6 content-start rounded-[24px] overflow-hidden">
+        <Image
+          src={image.filename}
+          alt={image.alt || `${title} image`}
+          width={0}
+          height={0}
+          className="w-full h-full absolute inset-0 z-[-1] object-cover"
+        />
         <Text
           variant="Heading/Heading-3"
           className="text-ffffff"

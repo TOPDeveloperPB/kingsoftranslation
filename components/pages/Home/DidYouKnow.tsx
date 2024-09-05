@@ -1,6 +1,7 @@
-import { Button, Text } from "@/components/core";
-import { useHomeCtx } from ".";
 import Link from "next/link";
+import { useHomeCtx } from ".";
+import Image from "next/image";
+import { Button, Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 
 export function DidYouKnow() {
@@ -9,13 +10,20 @@ export function DidYouKnow() {
 
   if (!component) return <></>;
 
-  const { title, description, link } = component;
+  const { title, description, link, image } = component;
 
   return (
     <div
       {...storyblokEditable(component)}
-      className="bg-didYouKnow rounded-[40px] px-16 py-[72px] grid"
+      className="relative px-16 py-[72px] grid rounded-[40px] overflow-hidden"
     >
+      <Image
+        src={image.filename}
+        alt={image.alt || `${title} image`}
+        width={0}
+        height={0}
+        className="w-full h-full absolute inset-0 z-[-1] object-cover"
+      />
       <div className="grid gap-[42px] max-w-[464px]">
         <div className="grid gap-4">
           <Text
