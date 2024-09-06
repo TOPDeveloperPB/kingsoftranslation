@@ -6,7 +6,7 @@ export default async function Home() {
   return <StoryblokStory story={data.story} />;
 }
 
-export async function fetchData() {
+async function fetchData() {
   const storyblokApi = getStoryblokApi();
   return storyblokApi.get(`cdn/stories/Home`, { version: "draft" });
 }
