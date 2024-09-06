@@ -24,7 +24,7 @@ import { ExploreOurUniqueApproachToLanguageTranslation } from "./pages/Home/Expl
 import { MakeYourNextMove } from "./pages/Home/MakeYourNextMove";
 
 storyblokInit({
-  accessToken: "Q4vYnoU8FkPykr9j6pwIlwtt",
+  accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_KEY,
   use: [apiPlugin],
   components: {
     page: ({ blok }) => {
