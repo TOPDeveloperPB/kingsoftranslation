@@ -1,23 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useHomeCtx } from ".";
 import { Button, Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 
-export function WhatIsCertifiedTranslationExactly() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "WhatIsCertifiedTranslationExactly"
-    );
-
-  if (!component) return <></>;
-
+export function WhatIsCertifiedTranslationExactly({ blok }: any) {
   const { title, description, image, remark, main_button, secondary_button } =
-    component;
+    blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="px-16 py-10 bg-ffffff rounded-[24px] grid gap-[56px] grid-cols-[1fr_auto] items-center"
     >
       <div className="grid gap-6">

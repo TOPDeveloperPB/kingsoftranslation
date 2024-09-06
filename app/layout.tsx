@@ -3,6 +3,13 @@ import favicon from "./favicon.png";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/core/Breadcrumbs";
 import { PT_Sans, PT_Sans_Caption } from "next/font/google";
+import { storyblokInit, apiPlugin } from "@storyblok/react";
+import StoryblokProvider from "@/components/StoryblokProvider";
+
+storyblokInit({
+  accessToken: "Q4vYnoU8FkPykr9j6pwIlwtt",
+  use: [apiPlugin],
+});
 
 const pt_sans = PT_Sans({
   subsets: ["latin"],
@@ -28,14 +35,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        style={pt_sans.style}
-        className={`${pt_sans.variable} ${pt_sans_caption.variable}`}
-      >
-        <Breadcrumbs />
-        <main>{children}</main>
-      </body>
-    </html>
+    <StoryblokProvider>
+      <html lang="en">
+        <body
+          style={pt_sans.style}
+          className={`${pt_sans.variable} ${pt_sans_caption.variable}`}
+        >
+          <Breadcrumbs />
+          {children}
+        </body>
+      </html>
+    </StoryblokProvider>
   );
 }

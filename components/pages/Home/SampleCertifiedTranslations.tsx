@@ -1,21 +1,13 @@
-import { useHomeCtx } from ".";
 import { Text } from "@/components/core";
 import { IStoryBlokComponentString } from "@/types";
 import { storyblokEditable } from "@storyblok/react";
 
-export function SampleCertifiedTranslations() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "SampleCertifiedTranslations"
-    );
-
-  if (!component) return <></>;
-
-  const { title, description, samples } = component;
+export function SampleCertifiedTranslations({ blok }: any) {
+  const { title, description, samples } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="bg-[#F0F7F7] grid gap-[56px] grid-cols-[372px_1fr] px-16 py-10 rounded-[24px]"
     >
       <div className="grid gap-6 content-start">

@@ -1,7 +1,6 @@
-import { storyblokEditable } from "@storyblok/react";
-import { useHomeCtx } from ".";
 import { Text } from "@/components/core";
 import { IStoryBlokComponent } from "@/types";
+import { storyblokEditable } from "@storyblok/react";
 
 interface IOptionSB extends IStoryBlokComponent {
   title: string;
@@ -9,19 +8,12 @@ interface IOptionSB extends IStoryBlokComponent {
   description: string;
 }
 
-export function WhatMakesKingsOfTranslationTheBestChoice() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "WhatMakesKingsOfTranslationTheBestChoice"
-    );
-
-  if (!component) return <></>;
-
-  const { options, title, description } = component;
+export function WhatMakesKingsOfTranslationTheBestChoice({ blok }: any) {
+  const { options, title, description } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="p-[40px_64px] bg-ffffff rounded-[24px] grid grid-cols-[488px_456px] gap-[56px]"
     >
       <div className="grid gap-8">

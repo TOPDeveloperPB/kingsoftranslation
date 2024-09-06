@@ -1,21 +1,13 @@
-import { useHomeCtx } from ".";
 import Image from "next/image";
 import { Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 import { IStoryBlokComponentStringWithImage } from "@/types";
 
-export function WhoAcceptsOurCertifiedLanguageTranslations() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "WhoAcceptsOurCertifiedLanguageTranslations"
-    );
-
-  if (!component) return <></>;
-
-  const { title, accepts } = component;
+export function WhoAcceptsOurCertifiedLanguageTranslations({ blok }: any) {
+  const { title, accepts } = blok;
 
   return (
-    <div {...storyblokEditable(component)} className="grid gap-6">
+    <div {...storyblokEditable(blok)} className="grid gap-6">
       <Text
         as="h2"
         variant="Heading/Heading-2"

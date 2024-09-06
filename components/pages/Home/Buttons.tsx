@@ -1,19 +1,13 @@
-import { Button, Text } from "@/components/core";
-import { useHomeCtx } from ".";
 import Link from "next/link";
+import { Button, Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 
-export function PartnershipButtons() {
-  const data = useHomeCtx(),
-    component = data.find((data) => data.component === "PartnershipButtons");
-
-  if (!component) return <></>;
-
-  const { main_button, secondary_button } = component;
+export function PartnershipButtons({blok}: any) {
+  const { main_button, secondary_button } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="grid grid-cols-[repeat(2,_350px)] justify-center gap-6"
     >
       <Link href={main_button.url}>

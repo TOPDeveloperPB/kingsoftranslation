@@ -1,6 +1,4 @@
-import { ArrowIcon } from "@/public/icons";
-import { Button, Text } from "@/components/core";
-import { useHomeCtx } from ".";
+import Link from "next/link";
 import {
   Spanish,
   Portuguese,
@@ -13,9 +11,10 @@ import {
   Japanese,
   Korean,
 } from "@/public/icons/flags";
-import Link from "next/link";
-import { storyblokEditable } from "@storyblok/react";
+import { ArrowIcon } from "@/public/icons";
+import { Button, Text } from "@/components/core";
 import { IStoryBlokComponentString } from "@/types";
+import { storyblokEditable } from "@storyblok/react";
 
 const languagesFlagsMap = new Map([
   ["Spanish", <Spanish key="Spanish" />],
@@ -30,18 +29,11 @@ const languagesFlagsMap = new Map([
   ["Korean", <Korean key="Korean" />],
 ]);
 
-export function ChooseBetweenLanguages() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "ChooseBetweenLanguages"
-    );
-
-  if (!component) return <></>;
-
-  const { title, description, link, languages_title, languages } = component;
+export function ChooseBetweenLanguages({ blok }: any) {
+  const { title, description, link, languages_title, languages } = blok;
 
   return (
-    <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-2">
+    <div {...storyblokEditable(blok)} className="grid gap-6 grid-cols-2">
       <div className="grid gap-4">
         <Text
           as="h2"

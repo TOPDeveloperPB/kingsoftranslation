@@ -6,7 +6,6 @@ import {
 } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
-import { useHomeCtx } from ".";
 import { Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 
@@ -18,19 +17,11 @@ interface ITranslationValueSB extends IStoryBlokComponent {
   description: IStoryBlokComponentString[];
 }
 
-export function ExploreOurUniqueApproachToLanguageTranslation() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) =>
-        data.component === "ExploreOurUniqueApproachToLanguageTranslation"
-    );
-
-  if (!component) return <></>;
-
-  const { title, description, translation_values } = component;
+export function ExploreOurUniqueApproachToLanguageTranslation({ blok }: any) {
+  const { title, description, translation_values } = blok;
 
   return (
-    <div {...storyblokEditable(component)} className="grid gap-6">
+    <div {...storyblokEditable(blok)} className="grid gap-6">
       <div className="grid gap-4">
         <Text
           as="h2"

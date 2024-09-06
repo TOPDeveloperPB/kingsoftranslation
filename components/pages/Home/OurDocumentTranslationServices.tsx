@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useHomeCtx } from ".";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CSSProperties, useState } from "react";
@@ -18,23 +17,17 @@ interface IService extends IStoryBlokComponent {
   background_color: string;
 }
 
-export function OurDocumentTranslationServices() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "OurDocumentTranslationServices"
-    );
-
+export function OurDocumentTranslationServices({ blok }: any) {
   const [viewMore, setViewMore] = useState(false);
   const toggleViewMore = () => setViewMore((prev) => !prev);
 
   const [expanded, setExpanded] = useState<string>();
   const [search, setSearch] = useState("");
-  if (!component) return <></>;
 
-  const { title, services } = component;
+  const { title, services } = blok;
 
   return (
-    <div className="grid gap-6" {...storyblokEditable(component)}>
+    <div className="grid gap-6" {...storyblokEditable(blok)}>
       <Text
         as="h2"
         variant="Heading/Heading-2"

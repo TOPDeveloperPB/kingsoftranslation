@@ -1,23 +1,14 @@
 import Image from "next/image";
-import { useHomeCtx } from ".";
 import { Button, Text } from "@/components/core";
 import Link from "next/link";
 import { storyblokEditable } from "@storyblok/react";
 
-export function CertifiedDocumentTranslationServices() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "CertifiedDocumentTranslationServices"
-    );
-
-  if (!component) return <></>;
-
-  const { title, description, image, main_button, secondary_button } =
-    component;
+export function CertifiedDocumentTranslationServices({ blok }: any) {
+  const { title, description, image, main_button, secondary_button } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="grid grid-cols-[1fr_auto] gap-8 items-center"
     >
       <div className="grid gap-4">

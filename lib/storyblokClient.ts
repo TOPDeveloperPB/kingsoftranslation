@@ -1,4 +1,4 @@
-import StoryblokClient from "storyblok-js-client";
+import StoryblokClient, { ISbCache } from "storyblok-js-client";
 
 const storyblokClient = new StoryblokClient({
   accessToken: "Q4vYnoU8FkPykr9j6pwIlwtt",

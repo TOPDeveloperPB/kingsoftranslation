@@ -1,21 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useHomeCtx } from ".";
 import { Button, Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 
-export function MakeYourNextMove() {
-  const data = useHomeCtx(),
-    component = data.find((data) => data.component === "MakeYourNextMove");
-
-  if (!component) return <></>;
-
-  const { title, description, main_button, secondary_button, image } =
-    component;
+export function MakeYourNextMove({ blok }: any) {
+  const { title, description, main_button, secondary_button, image } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="p-[48px_56px] grid gap-6 grid-cols-[1fr_auto] bg-[#F0F7F7] rounded-[24px] items-center"
     >
       <div className="grid gap-[56px]">

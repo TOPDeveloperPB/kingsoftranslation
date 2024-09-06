@@ -1,20 +1,14 @@
 import Link from "next/link";
-import { useHomeCtx } from ".";
 import Image from "next/image";
 import { Button, Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 
-export function DidYouKnow() {
-  const data = useHomeCtx(),
-    component = data.find((data) => data.component === "DidYouKnow");
-
-  if (!component) return <></>;
-
-  const { title, description, link, image } = component;
+export function DidYouKnow({ blok }: any) {
+  const { title, description, link, image } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="relative px-16 py-[72px] grid rounded-[40px] overflow-hidden"
     >
       <Image

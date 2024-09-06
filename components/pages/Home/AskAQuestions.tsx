@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useHomeCtx } from ".";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { storyblokEditable } from "@storyblok/react";
 import { EmailIcon, PhoneIcon } from "@/public/icons";
 import { Button, Input, Label, Text, Textarea } from "@/components/core";
 
-export function AskAQuestions() {
+export function AskAQuestions({blok}: any) {
   const variants = [
     {
       name: "By Phone",
@@ -19,16 +18,12 @@ export function AskAQuestions() {
     },
   ];
   const [activeVariant, setActiveVariant] = useState(variants[0].name);
-  const data = useHomeCtx(),
-    component = data.find((data) => data.component === "AskAQuestions");
 
-  if (!component) return <></>;
-
-  const { title, description, name, main_button } = component;
+  const { title, description, name, main_button } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="bg-[#F6F6F6] rounded-[24px] grid grid-cols-[1fr_auto] gap-12 p-[48px_56px]"
     >
       <div className="grid gap-10 content-start">

@@ -1,20 +1,14 @@
-import { useHomeCtx } from ".";
 import Image from "next/image";
 import { Text } from "@/components/core";
 import { storyblokEditable } from "@storyblok/react";
 import { IStoryBlokComponentStringWithImage } from "@/types";
 
-export function Achievements() {
-  const data = useHomeCtx(),
-    component = data.find((data) => data.component === "Achievements");
-
-  if (!component) return <></>;
-
-  const { achievements } = component;
+export function Achievements({ blok }: any) {
+  const { achievements } = blok;
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="bg-[#FFF5F0] p-8 rounded-[24px] grid grid-cols-4 gap-[21.33px] justify-between items-end"
     >
       {(achievements as IStoryBlokComponentStringWithImage[]).map(

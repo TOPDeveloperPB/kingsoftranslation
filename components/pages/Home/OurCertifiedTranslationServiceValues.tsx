@@ -1,11 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Text } from "@/components/core";
-import { ArrowDropDownIcon } from "@/public/icons";
-import { useHomeCtx } from ".";
-import { storyblokEditable } from "@storyblok/react";
 import { IStoryBlokComponent } from "@/types";
+import { ArrowDropDownIcon } from "@/public/icons";
+import { storyblokEditable } from "@storyblok/react";
 
 interface IValueSB extends IStoryBlokComponent {
   title: string;
@@ -13,18 +12,7 @@ interface IValueSB extends IStoryBlokComponent {
   description: string;
 }
 
-export function OurCertifiedTranslationServiceValues() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "OurCertifiedTranslationServiceValues"
-    );
-
-  const [expandedValueIndex, setExpandedValueIndex] = useState<
-    number | undefined
-  >(0);
-
-  if (!component) return <></>;
-
+export function OurCertifiedTranslationServiceValues({ blok }: any) {
   const {
     title,
     paragraph_first,
@@ -33,10 +21,14 @@ export function OurCertifiedTranslationServiceValues() {
     remark,
     values_title,
     values,
-  } = component;
+  } = blok;
+
+  const [expandedValueId, setExpandedValueId] = useState<string | undefined>(
+    (values as IValueSB[]).at(0)?._uid
+  );
 
   return (
-    <div {...storyblokEditable(component)} className="grid gap-6">
+    <div {...storyblokEditable(blok)} className="grid gap-6">
       <Text
         as="h2"
         variant="Heading/Heading-2"
@@ -68,11 +60,11 @@ export function OurCertifiedTranslationServiceValues() {
             dangerouslySetInnerHTML={{ __html: values_title }}
           />
           {(values as IValueSB[]).map(({ title, description, _uid }, index) => {
-            const isExpanded = index === expandedValueIndex;
+            const isExpanded = _uid === expandedValueId;
             const handleExpand = () =>
               isExpanded
-                ? setExpandedValueIndex(undefined)
-                : setExpandedValueIndex(index);
+                ? setExpandedValueId(undefined)
+                : setExpandedValueId(_uid);
 
             return (
               <div

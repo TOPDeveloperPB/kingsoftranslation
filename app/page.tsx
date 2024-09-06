@@ -1,11 +1,12 @@
-import { Home } from "@/components/pages/Home";
-import storyblokClient from "@/lib/storyblokClient";
+import { getStoryblokApi, StoryblokStory } from "@storyblok/react/rsc";
 
-export default async function Page() {
-  const { data } = await storyblokClient.get("cdn/stories/Home", {
-    version: "draft",
-  });
+export default async function Home() {
+  const { data } = await fetchData();
 
-  return <Home data={data?.story?.content?.content} />;
-  // return <Home data={data} />;
+  return <StoryblokStory story={data.story} />;
+}
+
+export async function fetchData() {
+  const storyblokApi = getStoryblokApi();
+  return storyblokApi.get(`cdn/stories/Home`, { version: "draft" });
 }

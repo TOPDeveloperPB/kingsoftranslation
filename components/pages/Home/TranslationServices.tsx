@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { useHomeCtx } from ".";
+import Image from "next/image";
 import { Button, Text } from "@/components/core";
 import { CheckCircleIcon } from "@/public/icons";
 import { storyblokEditable } from "@storyblok/react";
 import { IStoryBlokComponentString, IStoryBlokLink } from "@/types";
-import Image from "next/image";
 
 interface ITranslationServiceSB {
   per: string;
@@ -19,16 +18,11 @@ interface ITranslationServiceSB {
   available_formats: IStoryBlokComponentString[];
 }
 
-export function TranslationServices() {
-  const data = useHomeCtx(),
-    component = data.find((data) => data.component === "TranslationServices");
-
-  if (!component) return <></>;
-
-  const { title, description, image, translation_services } = component;
+export function TranslationServices({ blok }: any) {
+  const { title, description, image, translation_services } = blok;
 
   return (
-    <div {...storyblokEditable(component)} className="grid gap-6 grid-cols-3">
+    <div {...storyblokEditable(blok)} className="grid gap-6 grid-cols-3">
       <div className="relative grid gap-4 p-6 content-start rounded-[24px] overflow-hidden">
         <Image
           src={image.filename}

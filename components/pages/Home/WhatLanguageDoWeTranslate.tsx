@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { useHomeCtx } from ".";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -15,12 +14,7 @@ interface LanguagePair {
   second?: string;
 }
 
-export function WhatLanguageDoWeTranslate() {
-  const data = useHomeCtx(),
-    component = data.find(
-      (data) => data.component === "WhatLanguageDoWeTranslate"
-    );
-
+export function WhatLanguageDoWeTranslate({ blok }: any) {
   const [languagesState, setLanguagesState] = useState<LanguagePair>();
 
   const handleSwap = () =>
@@ -28,8 +22,6 @@ export function WhatLanguageDoWeTranslate() {
 
   const areBothLanguagesSelected =
     !!languagesState?.first && !!languagesState.second;
-
-  if (!component) return <></>;
 
   const {
     title,
@@ -39,7 +31,7 @@ export function WhatLanguageDoWeTranslate() {
     same_language,
     main_button,
     secondary_button,
-  } = component;
+  } = blok;
 
   const successWithValues = success
     .replace("{languages.first}", languagesState?.first)
@@ -140,7 +132,7 @@ export function WhatLanguageDoWeTranslate() {
 
   return (
     <div
-      {...storyblokEditable(component)}
+      {...storyblokEditable(blok)}
       className="px-16 py-10 bg-ffffff rounded-[24px] grid gap-10"
     >
       <Text
