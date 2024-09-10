@@ -1,3 +1,5 @@
+import { SbBlokData } from "@storyblok/react";
+
 export interface IStoryBlokAsset {
   id: number;
   alt: string;
@@ -22,7 +24,7 @@ export interface IStoryBlokLink {
   cached_url: string;
 }
 
-export interface IStoryBlokComponent {
+export interface IStoryBlokComponent extends SbBlokData {
   _uid: string;
   _editable: string;
 }

@@ -22,20 +22,14 @@ import { Achievements } from "./pages/Home/Achievements";
 import { AskAQuestions } from "./pages/Home/AskAQuestions";
 import { ExploreOurUniqueApproachToLanguageTranslation } from "./pages/Home/ExploreOurUniqueApproachToLanguageTranslation";
 import { MakeYourNextMove } from "./pages/Home/MakeYourNextMove";
+import { Page } from "./core/Page";
+import { ContactUsForAllOfYourLanguageTranslationQuestions } from "./pages/ContactUs/ContactUsForAllOfYourLanguageTranslationQuestions";
 
 storyblokInit({
   accessToken: process.env.NEXT_PUBLIC_STORYBLOK_ACCESS_KEY,
   use: [apiPlugin],
   components: {
-    page: ({ blok }) => {
-      return (
-        <main {...storyblokEditable(blok)} className="grid">
-          {blok.content.map((nestedBlok: any) => (
-            <StoryblokComponent blok={nestedBlok} key={nestedBlok._uid} />
-          ))}
-        </main>
-      );
-    },
+    page: Page,
     CertifiedDocumentTranslationServices: CertifiedDocumentTranslationServices,
     WhatMakesKingsOfTranslationTheBestChoice:
       WhatMakesKingsOfTranslationTheBestChoice,
@@ -55,6 +49,9 @@ storyblokInit({
       ExploreOurUniqueApproachToLanguageTranslation,
     MakeYourNextMove: MakeYourNextMove,
     AskAQuestions: AskAQuestions,
+    contact_us: Page,
+    ContactUsForAllOfYourLanguageTranslationQuestions:
+      ContactUsForAllOfYourLanguageTranslationQuestions,
   },
 });
 
